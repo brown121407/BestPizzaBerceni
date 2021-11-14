@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BestPizzaBerceni.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BestPizzaBerceni.Data
 {
@@ -9,5 +10,9 @@ namespace BestPizzaBerceni.Data
         {
 
         }
+
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductVariant> ProductVariants { get; set; }
     }
 }
