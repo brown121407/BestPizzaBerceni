@@ -3,6 +3,7 @@ using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +31,9 @@ namespace BestPizzaBerceni
             });
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BestPizzaBerceni")));
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
             
             services.AddScoped<IRepository<Ingredient, int>, Repository<Ingredient, int>>();
             services.AddScoped<IRepository<Product, int>, Repository<Product, int>>();
@@ -50,6 +54,7 @@ namespace BestPizzaBerceni
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
