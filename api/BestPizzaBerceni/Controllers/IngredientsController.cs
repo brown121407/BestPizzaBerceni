@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BestPizzaBerceni.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class IngredientsController : ControllerBase
     {
         private readonly IRepository<Ingredient, int> _ingredientsRepository;

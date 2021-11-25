@@ -9,5 +9,6 @@ namespace BestPizzaBerceni.Models
         public string LastName { get; set; }
 
         public ICollection<Role> Roles { get; set; }
+        public ICollection<Token> Tokens { get; set; }
     }
 }
