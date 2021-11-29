@@ -14,6 +14,7 @@ namespace BestPizzaBerceni.Data.Models
         public string AddressLine { get; set; }
         public string PostalCode { get; set; }
         public string PhoneNumber { get; set; }
+
         public int UserId { get; set; }
         public User User { get; set; }
     }

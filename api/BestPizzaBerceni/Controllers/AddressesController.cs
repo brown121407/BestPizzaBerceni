@@ -53,7 +53,7 @@ namespace BestPizzaBerceni.Controllers
                 return BadRequest();
             }
 
-                await _addressRepository.UpdateAsync(address);
+            await _addressRepository.UpdateAsync(address);
 
             return NoContent();
         }
@@ -82,6 +82,5 @@ namespace BestPizzaBerceni.Controllers
 
             return NoContent();
         }
-
     }
 }
