@@ -63,7 +63,7 @@ namespace BestPizzaBerceni
             });
 
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("BestPizzaBerceni")));
+                options.UseNpgsql(Configuration.GetConnectionString("BestPizzaBerceni")));
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
