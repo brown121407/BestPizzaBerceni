@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\api",
+    "\\api\\BestPizzaBerceni",
+    "\\api\\BestPizzaBerceni\\Controllers",
+    "\\api\\BestPizzaBerceni\\Data",
+    "\\api\\BestPizzaBerceni\\Data\\Models",
+    "\\api\\BestPizzaBerceni\\Migrations",
+    "\\api\\BestPizzaBerceni\\Properties",
+    "\\api\\BestPizzaBerceni\\Repositories",
+    "\\api\\BestPizzaBerceni\\Services"
+  ],
+  "SelectedNode": "\\api\\BestPizzaBerceni\\BestPizzaBerceni.csproj",
+  "PreviewInSolutionExplorer": false
+}

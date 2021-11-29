@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using BestPizzaBerceni.Data.Models;
 
 namespace BestPizzaBerceni.Models
 {
@@ -10,5 +11,6 @@ namespace BestPizzaBerceni.Models
 
         public ICollection<Role> Roles { get; set; }
         public ICollection<Token> Tokens { get; set; }
+        public ICollection<Address> Addresses { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using BestPizzaBerceni.Data;
+using BestPizzaBerceni.Data.Models;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
 using BestPizzaBerceni.Repositories.UserRepository;
@@ -91,7 +92,8 @@ namespace BestPizzaBerceni
             services.AddScoped<IRepository<ProductVariant, int>, Repository<ProductVariant, int>>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRepository<Token, string>, Repository<Token, string>>();
-
+            services.AddScoped<IRepository<Address, int>, Repository<Address, int>>();
+            
             services.AddScoped<IUserService, UserService>();
         }
 
