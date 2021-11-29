@@ -13,10 +13,23 @@ namespace BestPizzaBerceni.Data
 
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            
+            builder
+                .Entity<OrderStatusUpdate>()
+                .HasOne(e => e.Order)
+                .WithMany(e => e.OrderStatusUpdates)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+        
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<Token> Tokens { get; set; }
-        public DbSet<Address> Address { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderStatusUpdate> OrderStatusUpdates { get; set; }
     }
 }
