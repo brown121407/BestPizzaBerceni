@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using BestPizzaBerceni.Data.DTOs;
-using BestPizzaBerceni.Models;
+using BestPizzaBerceni.Data.Models;
 using BestPizzaBerceni.Services.UserService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

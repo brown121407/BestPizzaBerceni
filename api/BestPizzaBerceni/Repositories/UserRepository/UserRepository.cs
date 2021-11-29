@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BestPizzaBerceni.Data;
-using BestPizzaBerceni.Models;
+using BestPizzaBerceni.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BestPizzaBerceni.Repositories.UserRepository

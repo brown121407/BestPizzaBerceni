@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using BestPizzaBerceni.Data.DTOs;
-using BestPizzaBerceni.Models;
+using BestPizzaBerceni.Data.Models;
 using BestPizzaBerceni.Repositories;
 using BestPizzaBerceni.Repositories.UserRepository;
 using Microsoft.AspNetCore.Identity;

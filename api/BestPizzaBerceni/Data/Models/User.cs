@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
-using BestPizzaBerceni.Data.Models;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
-namespace BestPizzaBerceni.Models
+namespace BestPizzaBerceni.Data.Models
 {
     public class User : IdentityUser<int>
     {

@@ -1,4 +1,4 @@
-﻿using BestPizzaBerceni.Models;
+﻿using BestPizzaBerceni.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using BestPizzaBerceni.Data.Models;

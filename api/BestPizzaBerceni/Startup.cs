@@ -4,7 +4,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BestPizzaBerceni.Data;
 using BestPizzaBerceni.Data.Models;
-using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
 using BestPizzaBerceni.Repositories.UserRepository;
 using BestPizzaBerceni.Services.UserService;

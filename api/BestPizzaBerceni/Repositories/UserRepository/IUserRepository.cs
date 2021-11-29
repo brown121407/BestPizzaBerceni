@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using BestPizzaBerceni.Models;
+using BestPizzaBerceni.Data.Models;
 
 namespace BestPizzaBerceni.Repositories.UserRepository
 {

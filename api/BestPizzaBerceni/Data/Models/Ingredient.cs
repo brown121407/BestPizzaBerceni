@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BestPizzaBerceni.Models
+namespace BestPizzaBerceni.Data.Models
 {
     public class Ingredient
     {

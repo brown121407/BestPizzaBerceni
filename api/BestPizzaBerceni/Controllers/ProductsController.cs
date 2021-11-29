@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using BestPizzaBerceni.Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
 
 namespace BestPizzaBerceni.Controllers

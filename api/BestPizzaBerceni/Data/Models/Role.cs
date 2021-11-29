@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
-namespace BestPizzaBerceni.Models
+namespace BestPizzaBerceni.Data.Models
 {
     public class Role : IdentityRole<int>
     {

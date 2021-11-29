@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace BestPizzaBerceni.Models
+namespace BestPizzaBerceni.Data.Models
 {
     public class Token
     {

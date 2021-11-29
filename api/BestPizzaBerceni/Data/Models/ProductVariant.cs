@@ -1,4 +1,4 @@
-﻿namespace BestPizzaBerceni.Models
+﻿namespace BestPizzaBerceni.Data.Models
 {
     public class ProductVariant
     {
