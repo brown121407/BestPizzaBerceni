@@ -1,6 +1,7 @@
 ﻿using BestPizzaBerceni.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using BestPizzaBerceni.Data.Models;
 
 namespace BestPizzaBerceni.Data
 {
@@ -16,5 +17,6 @@ namespace BestPizzaBerceni.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<Token> Tokens { get; set; }
+        public DbSet<BestPizzaBerceni.Data.Models.Address> Address { get; set; }
     }
 }
