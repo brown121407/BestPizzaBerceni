@@ -93,7 +93,8 @@ namespace BestPizzaBerceni
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRepository<Token, string>, Repository<Token, string>>();
             services.AddScoped<IRepository<Address, int>, Repository<Address, int>>();
-            
+            services.AddScoped<IRepository<Order, int>, Repository<Order, int>>();
+            services.AddScoped<IRepository<OrderStatusUpdate, int>, Repository<OrderStatusUpdate, int>>();
             services.AddScoped<IUserService, UserService>();
         }
 
