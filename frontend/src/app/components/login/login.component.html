@@ -11,6 +11,6 @@
       <input matInput type="text" formControlName="password">
     </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="login()">Log In</button>
+    <button mat-raised-button color="primary" [disabled]="formGroup.invalid" (click)="login()">Log In</button>
   </form>
 </div>
