@@ -1,4 +1,6 @@
-﻿namespace BestPizzaBerceni.Models
+﻿using BestPizzaBerceni.Data.Models;
+
+namespace BestPizzaBerceni.Models
 {
     public class ProductVariant
     {
@@ -8,5 +10,7 @@
         public string Unit { get; set; }
 
         public Product Product { get; set; }
+        public CartItem CartItem { get; set; }
+        public OrderItem OrderItem { get; set; }
     }
 }

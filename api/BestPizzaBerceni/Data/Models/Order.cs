@@ -7,5 +7,6 @@ namespace BestPizzaBerceni.Data.Models
 {
     public class Order
     {
+        public OrderItem OrderItem { get; set; }
     }
 }
