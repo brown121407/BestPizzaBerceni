@@ -1,0 +1,40 @@
+<div class="container">
+  <h1>Sign Up</h1>
+
+  <form [formGroup]="formGroup">
+    <mat-form-field appearance="fill">
+      <mat-label>First Name</mat-label>
+      <input matInput type="text" formControlName="firstName">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Last Name</mat-label>
+      <input matInput type="text" formControlName="lastName">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" color="primary">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password Confirmation</mat-label>
+      <input matInput type="password" formControlName="passwordConfirmation">
+    </mat-form-field>
+
+    <div class="errors">
+      <p *ngFor="let error of errors">{{ error }}</p>
+    </div>
+
+    <button *ngIf="!isLoading; else loading" mat-raised-button color="primary" [disabled]="formGroup.invalid"
+            (click)="signup()">Sign Up</button>
+    <ng-template #loading>
+      <mat-spinner></mat-spinner>
+    </ng-template>
+  </form>
+</div>

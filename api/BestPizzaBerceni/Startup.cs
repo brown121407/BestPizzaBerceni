@@ -33,6 +33,7 @@ namespace BestPizzaBerceni
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -63,7 +64,7 @@ namespace BestPizzaBerceni
             });
 
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("BestPizzaBerceni")));
+                options.UseNpgsql(Configuration.GetConnectionString("BestPizzaBerceni")));
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
@@ -93,7 +94,8 @@ namespace BestPizzaBerceni
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRepository<Token, string>, Repository<Token, string>>();
             services.AddScoped<IRepository<Address, int>, Repository<Address, int>>();
-            
+            services.AddScoped<IRepository<Order, int>, Repository<Order, int>>();
+            services.AddScoped<IRepository<OrderStatusUpdate, int>, Repository<OrderStatusUpdate, int>>();
             services.AddScoped<IUserService, UserService>();
         }
 
@@ -108,6 +110,8 @@ namespace BestPizzaBerceni
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(builder => builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200"));
 
             app.UseRouting();
 
