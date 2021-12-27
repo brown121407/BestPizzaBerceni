@@ -50,6 +50,8 @@ namespace BestPizzaBerceni.Services.UserService
 
             if (user is null) return null;
 
+            if (!await _userManager.CheckPasswordAsync(user, dto.Password)) return null;
+
             user = await _userRepository.GetByIdWithRolesAsync(user.Id);
 
             var jti = Guid.NewGuid().ToString();
