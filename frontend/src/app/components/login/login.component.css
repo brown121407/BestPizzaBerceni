@@ -7,3 +7,20 @@ form {
   display: flex;
   flex-direction: column;
 }
+
+.error {
+  color: red;
+}
+
+.btn-login {
+  min-height: 1rem;
+}
+
+.btn-login mat-progress-bar {
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 50%;
+  width: 90%;
+}

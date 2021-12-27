@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {equalToValidator} from "../../directives/equal-to.directive";
-import {AccountsService} from "../../services/accounts.service";
+import {AccountService} from "../../services/account.service";
 import {IUser, IUserSignup} from "../../models/user";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit {
   errors: string[] = [];
   isLoading: boolean = false;
 
-  constructor(private accountsService: AccountsService, private router: Router, private toastr: ToastrService) {
+  constructor(private accountsService: AccountService, private router: Router, private toastr: ToastrService) {
     this.formGroup.get('passwordConfirmation')?.addValidators(equalToValidator(this.formGroup.get('password')!));
   }
 
