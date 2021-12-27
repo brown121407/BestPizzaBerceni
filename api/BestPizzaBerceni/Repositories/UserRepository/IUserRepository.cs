@@ -6,6 +6,7 @@ namespace BestPizzaBerceni.Repositories.UserRepository
     public interface IUserRepository : IRepository<User, int>
     {
         Task<User> GetByEmailAsync(string email);
+        Task<User> GetByEmailWithRolesAsync(string email);
         Task<User> GetByIdWithRolesAsync(int id);
     }
 }

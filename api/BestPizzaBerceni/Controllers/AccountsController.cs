@@ -1,7 +1,10 @@
 ﻿using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BestPizzaBerceni.Data.DTOs;
 using BestPizzaBerceni.Models;
+using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.UserRepository;
 using BestPizzaBerceni.Services.UserService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,11 +18,13 @@ namespace BestPizzaBerceni.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
 
-        public AccountsController(UserManager<User> userManager, IUserService userService)
+        public AccountsController(UserManager<User> userManager, IUserService userService, IUserRepository userRepository)
         {
             _userManager = userManager;
             _userService = userService;
+            _userRepository = userRepository;
         }
 
         [HttpPost("register")]
@@ -55,6 +60,22 @@ namespace BestPizzaBerceni.Controllers
             }
 
             return Ok(token);
+        }
+
+        [HttpGet("me")]
+        [Authorize]
+        public async Task<ActionResult<UserDTO>> GetCurrentUser()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var user = await _userRepository.GetByEmailWithRolesAsync(email);
+            return new UserDTO
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Roles = user.Roles.Select(x => x.Name).ToList()
+            };
         }
     }
 }
