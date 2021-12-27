@@ -4,7 +4,10 @@ namespace BestPizzaBerceni.Data.Models
 {
     public class OrderItem
     {
-        public Cupon Cupon { get; set; }
+        public int Id { get; set; }
+        
+        public int CouponId { get; set; }
+        public Coupon Coupon { get; set; }
         public ProductVariant ProductVariant { get; set; }
         public Order Order { get; set; }
     }

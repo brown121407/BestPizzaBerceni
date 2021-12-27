@@ -12,5 +12,6 @@ namespace BestPizzaBerceni.Data.Models
         public int AddressId { get; set; }
         public Address Address { get; set; }
         public ICollection<OrderStatusUpdate> OrderStatusUpdates { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BestPizzaBerceni.Data.Models;
+﻿using System.Collections.Generic;
+using BestPizzaBerceni.Data.Models;
 
 namespace BestPizzaBerceni.Models
 {
@@ -10,7 +11,7 @@ namespace BestPizzaBerceni.Models
         public string Unit { get; set; }
 
         public Product Product { get; set; }
-        public CartItem CartItem { get; set; }
-        public OrderItem OrderItem { get; set; }
+        public ICollection<CartItem> CartItems { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
     }
 }

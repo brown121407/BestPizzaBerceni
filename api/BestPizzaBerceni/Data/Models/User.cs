@@ -13,6 +13,6 @@ namespace BestPizzaBerceni.Models
         public ICollection<Token> Tokens { get; set; }
         public ICollection<Address> Addresses { get; set; }
         public ICollection<CartItem> CartItems { get; set; }
-        public ICollection<Cupon> Cupons { get; set; }
+        public ICollection<Coupon> Coupons { get; set; }
     }
 }
