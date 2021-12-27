@@ -111,7 +111,12 @@ namespace BestPizzaBerceni
 
             app.UseHttpsRedirection();
 
-            app.UseCors(builder => builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200"));
+            app.UseCors(builder => builder
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+                .WithOrigins("http://localhost:4200")
+            );
 
             app.UseRouting();
 
