@@ -18,6 +18,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {JwtModule} from "@auth0/angular-jwt";
 import { MenuComponent } from './components/menu/menu.component';
 import { RefreshComponent } from './components/refresh/refresh.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import {MatCardModule} from "@angular/material/card";
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -30,6 +32,7 @@ export function tokenGetter() {
     SignupComponent,
     MenuComponent,
     RefreshComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,9 @@ export function tokenGetter() {
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    ToastrModule.forRoot(),
     ReactiveFormsModule,
     HttpClientModule,
     JwtModule.forRoot({
@@ -47,9 +53,7 @@ export function tokenGetter() {
         allowedDomains: ["localhost:5001", "localhost:5000"]
       }
     }),
-    ToastrModule.forRoot(),
-    MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

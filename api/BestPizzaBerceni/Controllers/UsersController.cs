@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BestPizzaBerceni.Data.DTOs;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.UserRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,9 +14,9 @@ namespace BestPizzaBerceni.Controllers
     [Authorize]
     public class UsersController : ControllerBase
     {
-        private readonly IRepository<User, int> _usersRepository;
+        private readonly IUserRepository _usersRepository;
 
-        public UsersController(IRepository<User, int> usersRepository)
+        public UsersController(IUserRepository usersRepository)
         {
             _usersRepository = usersRepository;
         }
@@ -32,14 +34,24 @@ namespace BestPizzaBerceni.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(int id, UserDTO user)
         {
             if (id != user.Id)
             {
                 return BadRequest();
             }
 
-            await _usersRepository.UpdateAsync(user);
+            var realUser = await _usersRepository.GetByIdAsync(id);
+            if (realUser is null)
+            {
+                return NotFound();
+            }
+            
+            realUser.FirstName = user.FirstName;
+            realUser.LastName = user.LastName;
+            realUser.Email = user.Email;
+            
+            await _usersRepository.UpdateAsync(realUser);
 
             return NoContent();
         }

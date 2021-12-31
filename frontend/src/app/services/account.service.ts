@@ -35,11 +35,11 @@ export class AccountService {
           return this.me();
         }),
         map((me: Partial<IUser>) => {
-          localStorage.setItem('user', JSON.stringify(me));
           const user = {
             token: localStorage.getItem('token')!,
             ...me
           } as IUser;
+          localStorage.setItem('user', JSON.stringify(user));
           this.currentUserSubject.next(user);
           return user;
         })
@@ -53,6 +53,16 @@ export class AccountService {
   }
 
   me(): Observable<Partial<IUser>> {
-    return this.httpClient.get<IUser>(`${environment.apiUrl}/accounts/me`, { withCredentials: true });
+    return this.httpClient.get<IUser>(`${environment.apiUrl}/accounts/me`);
+  }
+
+  updateProfile(user: IUser): Observable<any> {
+    return this.httpClient.put(`${environment.apiUrl}/users/${user.id}`, user)
+      .pipe(
+        tap((_) => {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        })
+      );
   }
 }

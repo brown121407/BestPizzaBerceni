@@ -2,7 +2,7 @@
   <a routerLink="/" id="logo">Best Pizza Berceni</a>
   <span class="spacer"></span>
   <ng-container *ngIf="isLoggedIn else notLoggedIn">
-    <a href="#" mat-raised-button color="primary">Account</a>
+    <a routerLink="/profile" mat-raised-button color="primary">Account</a>
     <button mat-raised-button (click)="logOut()">Log Out</button>
   </ng-container>
   <ng-template #notLoggedIn>
