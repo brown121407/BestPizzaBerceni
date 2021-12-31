@@ -14,3 +14,9 @@ mat-toolbar .spacer {
 mat-toolbar {
   gap: 0.5rem;
 }
+
+main {
+  padding: 1rem;
+  max-width: 60rem;
+  margin: 0 auto;
+}

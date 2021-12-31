@@ -1,5 +1,6 @@
 <mat-toolbar>
   <a routerLink="/" id="logo">Best Pizza Berceni</a>
+  <a routerLink="/" mat-raised-button color="primary">Menu</a>
   <span class="spacer"></span>
   <ng-container *ngIf="isLoggedIn else notLoggedIn">
     <a routerLink="/profile" mat-raised-button color="primary">Account</a>
@@ -11,4 +12,6 @@
   </ng-template>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<main>
+  <router-outlet></router-outlet>
+</main>
