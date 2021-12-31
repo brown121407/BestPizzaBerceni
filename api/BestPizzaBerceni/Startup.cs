@@ -109,7 +109,10 @@ namespace BestPizzaBerceni
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BestPizzaBerceni v1"));
             }
 
-            app.UseHttpsRedirection();
+            if (!env.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
 
             app.UseCors(builder => builder
                 .AllowAnyMethod()
