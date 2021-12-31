@@ -3,6 +3,7 @@
   <a routerLink="/" mat-raised-button color="primary">Menu</a>
   <span class="spacer"></span>
   <ng-container *ngIf="isLoggedIn else notLoggedIn">
+    <a routerLink="/cart" mat-raised-button color="accent"><mat-icon>shopping_cart</mat-icon></a>
     <a routerLink="/profile" mat-raised-button color="primary">Account</a>
     <button mat-raised-button (click)="logOut()">Log Out</button>
   </ng-container>

@@ -21,6 +21,7 @@ import { RefreshComponent } from './components/refresh/refresh.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";
+import { CartComponent } from './components/cart/cart.component';
 import {MatChipsModule} from "@angular/material/chips";
 
 export function tokenGetter() {
@@ -35,6 +36,7 @@ export function tokenGetter() {
     MenuComponent,
     RefreshComponent,
     ProfileComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
