@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {IngredientService} from "../../services/ingredient.service";
 import {Router} from "@angular/router";
-import {IIngredient} from "../../models/ingredient";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
@@ -27,13 +26,12 @@ export class IngredientPageComponent implements OnInit {
   }
 
   addIngred(): void{
-    console.log(this.formGroup.getRawValue());
     this.isLoading = true;
     this.ingredientService.addIngredient(this.formGroup.value).subscribe({
       next: (_) => {
         this.isLoading = false;
         this.toastr.success("Ingredient added successfully");
-        this.goToPage(`/ingredient`);
+        this.goToPage(`/ingredients/list`);
       },
       error: (_) => {
       this.isLoading = false;

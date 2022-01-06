@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {equalToValidator} from "../../directives/equal-to.directive";
-import {AccountService} from "../../services/account.service";
-import {IUser, IUserSignup} from "../../models/user";
-import {Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { equalToValidator } from "../../../../directives/equal-to.directive";
+import { AccountService } from "../../services/account.service";
+import { IUserSignup } from "../../../../models/user";
+import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-signup',

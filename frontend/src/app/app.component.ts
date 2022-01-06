@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AccountService} from "./services/account.service";
+import {AccountService} from "./modules/account/services/account.service";
 import {IUser} from "./models/user";
 import {NavigationEnd, Router} from "@angular/router";
 import {Subject, Subscription, takeUntil} from "rxjs";

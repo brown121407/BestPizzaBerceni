@@ -5,29 +5,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatButtonModule} from "@angular/material/button";
-import { LoginComponent } from './components/login/login.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { SignupComponent } from './components/signup/signup.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ToastrModule} from "ngx-toastr";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {JwtModule} from "@auth0/angular-jwt";
 import { MenuComponent } from './components/menu/menu.component';
 import { RefreshComponent } from './components/refresh/refresh.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import {MatCardModule} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";
-import { CartComponent } from './components/cart/cart.component';
 import {MatChipsModule} from "@angular/material/chips";
-import { IngredientComponent } from './components/ingredient/ingredient.component';
-import { IngredientPageComponent } from './components/ingredient-page/ingredient-page.component';
 import {MatRadioModule} from "@angular/material/radio";
-import { IngredientUpdateComponent } from './components/ingredient-update/ingredient-update.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {AccountModule} from "./modules/account/account.module";
+import { OrderModule } from "./modules/order/order.module";
+import { MatButtonModule } from "@angular/material/button";
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule } from "@angular/forms";
+import { IngredientsModule } from "./modules/ingredients/ingredients.module";
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -36,28 +27,19 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    SignupComponent,
     MenuComponent,
     RefreshComponent,
-    ProfileComponent,
-    CartComponent,
-    IngredientComponent,
-    IngredientPageComponent,
-    IngredientUpdateComponent,
   ],
   imports: [
+    // Internal modules
+    AccountModule,
+    OrderModule,
+    IngredientsModule,
+    // External modules
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule,
+    AppRoutingModule,
     ToastrModule.forRoot(),
-    ReactiveFormsModule,
     HttpClientModule,
     JwtModule.forRoot({
         config: {
@@ -65,12 +47,13 @@ export function tokenGetter() {
             allowedDomains: ["localhost:5001", "localhost:5000"]
         }
     }),
-    MatCardModule,
     MatIconModule,
     FormsModule,
     MatChipsModule,
     MatRadioModule,
     MatCheckboxModule,
+    MatToolbarModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

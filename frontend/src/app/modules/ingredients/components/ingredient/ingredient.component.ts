@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ICartItem} from "../../models/cart-item";
-import {IIngredient} from "../../models/ingredient";
+import {IIngredient} from "../../../../models/ingredient";
 import {IngredientService} from "../../services/ingredient.service";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";

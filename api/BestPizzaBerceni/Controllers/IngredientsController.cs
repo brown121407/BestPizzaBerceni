@@ -9,7 +9,7 @@ namespace BestPizzaBerceni.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public class IngredientsController : ControllerBase
     {
         private readonly IRepository<Ingredient, int> _ingredientsRepository;

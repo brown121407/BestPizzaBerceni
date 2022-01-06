@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {environment} from "../../environments/environment";
+import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, catchError, map, Observable, of, switchMap, tap} from "rxjs";
-import {IUser, IUserLogin, IUserSignup} from "../models/user";
+import {BehaviorSubject, map, Observable, switchMap, tap} from "rxjs";
+import {IUser, IUserLogin, IUserSignup} from "../../../models/user";
+import {AccountModule} from "../account.module";
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,6 @@ export class AccountService {
     return this.httpClient.post(`${environment.apiUrl}/accounts/login`, user, { responseType: 'text' })
       .pipe(
         switchMap((token: string) => {
-          console.log(token);
           localStorage.setItem('token', token);
           return this.me();
         }),
