@@ -23,8 +23,8 @@ mat-card-header {
   flex-wrap: wrap;
 }
 
-.price input {
-  width: 5rem;
+.price mat-form-field {
+  width: 3rem;
 }
 
 .total {

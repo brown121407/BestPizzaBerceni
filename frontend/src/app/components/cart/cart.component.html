@@ -8,8 +8,10 @@
         </mat-card-title>
         <span class="spacer"></span>
         <div class="price">
-          <input matInput type="number" [(ngModel)]="cartItem.quantity" (change)="modifyCartItem()"
-                 min="0">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="cartItem.quantity" (change)="modifyCartItem()"
+                   min="0">
+          </mat-form-field>
           *
           <span class="product-variant-price">{{ cartItem!.productVariant!.price }} €</span>
           =
