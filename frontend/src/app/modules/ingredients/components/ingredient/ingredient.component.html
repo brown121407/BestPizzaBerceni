@@ -1,0 +1,37 @@
+<ul>
+  <li *ngFor="let ingredient of ingredients; index as i">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          {{ ingredient.name}}
+
+        </mat-card-title>
+        <mat-chip-list aria-label="Info-label">
+          <mat-chip *ngIf="ingredient.spicy == true;" color="warn" selected>Spicy</mat-chip>
+          <mat-chip *ngIf="ingredient.allergen == true;" color="accent" selected>Allergen</mat-chip>
+        </mat-chip-list>
+        <div class="button-row">
+          <a routerLink="/ingredients/{{ingredient.id}}" mat-raised-button class = "info-button" color="primary">Edit</a>
+          <button mat-raised-button class = "info-button" color="warn" (click)="deleteIngred(ingredient.id)">Delete</button>
+        </div>
+        <span class="spacer"></span>
+      </mat-card-header>
+
+
+    </mat-card>
+  </li>
+  <li>
+
+  </li>
+</ul>
+
+<p *ngIf="ingredients.length <= 0">
+  <mat-card><mat-card-title>You don't have any ingredients. </mat-card-title></mat-card>
+</p>
+<div class="ingredients-actions">
+  <a routerLink="/ingredients/new" mat-raised-button class = "info-button" color="primary">Add Ingredient</a>
+  <span class="spacer"></span>
+</div>
+
+
+

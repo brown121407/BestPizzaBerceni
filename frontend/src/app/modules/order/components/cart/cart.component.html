@@ -1,0 +1,52 @@
+<ul>
+  <li *ngFor="let cartItem of cartItems; index as i">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          {{ cartItem!.productVariant!.product!.name }}
+          <mat-chip color="accent" selected>{{ cartItem!.productVariant!.name }}</mat-chip>
+        </mat-card-title>
+        <span class="spacer"></span>
+        <div class="price">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="cartItem.quantity" (change)="modifyCartItem()"
+                   min="0">
+          </mat-form-field>
+          *
+          <span class="product-variant-price">{{ cartItem!.productVariant!.price }} €</span>
+          =
+          <span class="cart-item-price">
+            {{ cartItem!.productVariant!.price * cartItem!.quantity}} €
+          </span>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-chip-list>
+          <mat-chip *ngFor="let ingredient of cartItem!.productVariant!.product!.ingredients">
+            {{ ingredient.name }}
+          </mat-chip>
+        </mat-chip-list>
+      </mat-card-content>
+    </mat-card>
+  </li>
+  <li>
+    <mat-card *ngIf="cartItems.length > 0" class="total">
+      <p>Total: {{ getTotal() }} €</p>
+    </mat-card>
+  </li>
+</ul>
+
+<p *ngIf="cartItems.length <= 0">
+  Your cart is empty.
+</p>
+
+<div id="cart-actions">
+  <button mat-raised-button [disabled]="cartItems.length <= 0" (click)="emptyCart()">Empty Cart</button>
+  <span class="spacer"></span>
+  <button [disabled]="!hasChanged" (click)="updateCart()" mat-raised-button>
+    Update
+  </button>
+  <button [disabled]="hasChanged || cartItems.length <= 0" mat-raised-button color="primary" (click)="order()">
+    Order
+  </button>
+</div>

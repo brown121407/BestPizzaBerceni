@@ -1,0 +1,20 @@
+.info-ingredient {
+  display:      inline-block;
+  float: left;
+  text-space: 10px;
+}
+
+.buttons {
+  padding-left: 20px;
+  position: center;
+}
+
+.btn-add {
+  margin-top: 20px;
+  float: right;
+  margin-left: 20px;
+}
+
+.add-ing-body {
+  height: 350px;
+}
