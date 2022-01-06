@@ -23,6 +23,11 @@ import {MatCardModule} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";
 import { CartComponent } from './components/cart/cart.component';
 import {MatChipsModule} from "@angular/material/chips";
+import { IngredientComponent } from './components/ingredient/ingredient.component';
+import { IngredientPageComponent } from './components/ingredient-page/ingredient-page.component';
+import {MatRadioModule} from "@angular/material/radio";
+import { IngredientUpdateComponent } from './components/ingredient-update/ingredient-update.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -37,6 +42,9 @@ export function tokenGetter() {
     RefreshComponent,
     ProfileComponent,
     CartComponent,
+    IngredientComponent,
+    IngredientPageComponent,
+    IngredientUpdateComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,15 +60,17 @@ export function tokenGetter() {
     ReactiveFormsModule,
     HttpClientModule,
     JwtModule.forRoot({
-      config: {
-        tokenGetter,
-        allowedDomains: ["localhost:5001", "localhost:5000"]
-      }
+        config: {
+            tokenGetter,
+            allowedDomains: ["localhost:5001", "localhost:5000"]
+        }
     }),
     MatCardModule,
     MatIconModule,
     FormsModule,
     MatChipsModule,
+    MatRadioModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
