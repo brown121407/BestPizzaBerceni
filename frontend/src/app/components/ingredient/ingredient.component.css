@@ -1,0 +1,50 @@
+#cart-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.info-button{
+  display:      inline-block;
+  float: right;
+}
+.button-row {
+  display: table-cell;
+  width: 100%;
+  float: right;
+
+}
+.modify-button{
+  float: right;
+  margin-right: 20px;
+}
+.button-row .mat-button-base {
+  margin: 0px 5px 5px 5px;
+}
+
+.spacer {
+  flex-grow: 99;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+mat-card-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.price input {
+  width: 5rem;
+}
+
+.total {
+  text-align: right;
+  font-weight: bold;
+}

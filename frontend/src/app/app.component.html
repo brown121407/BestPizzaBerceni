@@ -1,6 +1,7 @@
 <mat-toolbar>
   <a routerLink="/" id="logo">Best Pizza Berceni</a>
   <a routerLink="/" mat-raised-button color="primary">Menu</a>
+  <a routerLink="/ingredient" mat-raised-button color="primary">Ingredients</a>
   <span class="spacer"></span>
   <ng-container *ngIf="isLoggedIn else notLoggedIn">
     <a routerLink="/cart" mat-raised-button color="accent"><mat-icon>shopping_cart</mat-icon></a>

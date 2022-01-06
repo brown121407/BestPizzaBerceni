@@ -7,6 +7,9 @@ import {AuthGuard} from "./guards/auth.guard";
 import {RefreshComponent} from "./components/refresh/refresh.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {CartComponent} from "./components/cart/cart.component";
+import {IngredientComponent} from "./components/ingredient/ingredient.component";
+import {IngredientPageComponent} from "./components/ingredient-page/ingredient-page.component";
+import {IngredientUpdateComponent} from "./components/ingredient-update/ingredient-update.component";
 
 const routes: Routes = [
   { path: '', component: MenuComponent, canActivate: [AuthGuard] },
@@ -14,7 +17,10 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'refresh', component: RefreshComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] }
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
+  { path: 'ingredient', component: IngredientComponent},
+  { path: 'ingredient-page', component: IngredientPageComponent },
+  { path: 'ingredient-update/:id', component: IngredientUpdateComponent}
 ];
 
 @NgModule({
