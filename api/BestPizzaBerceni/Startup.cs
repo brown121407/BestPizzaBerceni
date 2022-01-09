@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using BestPizzaBerceni.Data;
 using BestPizzaBerceni.Data.Models;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.ProductRepository;
 using BestPizzaBerceni.Repositories.UserRepository;
 using BestPizzaBerceni.Services.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 namespace BestPizzaBerceni
 {
@@ -34,7 +37,8 @@ namespace BestPizzaBerceni
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddControllers();
+            //services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BestPizzaBerceni", Version = "v1" });
@@ -89,7 +93,7 @@ namespace BestPizzaBerceni
                 });
 
             services.AddScoped<IRepository<Ingredient, int>, Repository<Ingredient, int>>();
-            services.AddScoped<IRepository<Product, int>, Repository<Product, int>>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IRepository<ProductVariant, int>, Repository<ProductVariant, int>>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRepository<Token, string>, Repository<Token, string>>();

@@ -1,0 +1,29 @@
+<ul>
+  <li *ngFor="let product of products; index as i">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          {{ product.name}}
+          <button mat-raised-button class = "info-button" color="warn" (click)="deleteProduct(product.id!)">Delete</button>
+          <div *ngFor="let ingredient of product.ingredients; index as j">
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>
+                  {{ ingredient.name}}
+                  </mat-card-title>
+              </mat-card-header>
+            </mat-card>
+          </div>
+        </mat-card-title>
+      </mat-card-header>
+    </mat-card>
+  </li>
+</ul>
+
+<p *ngIf="products.length <= 0">
+  <mat-card><mat-card-title>You don't have any products. </mat-card-title></mat-card>
+</p>
+<div class="ingredients-actions">
+  <a routerLink="/products/new" mat-raised-button class = "info-button" color="primary">Add Product</a>
+  <span class="spacer"></span>
+</div>
