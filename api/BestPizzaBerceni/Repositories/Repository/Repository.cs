@@ -17,22 +17,22 @@ namespace BestPizzaBerceni.Repositories
             DbContext = dbContext;
         }
 
-        public TEntity? GetById(TId id)
+        public virtual TEntity? GetById(TId id)
         {
             return DbContext.Set<TEntity>().Find(id);
         }
 
-        public async Task<TEntity?> GetByIdAsync(TId id)
+        public virtual async Task<TEntity?> GetByIdAsync(TId id)
         {
             return await DbContext.Set<TEntity>().FindAsync(id);
         }
 
-        public List<TEntity> GetAll()
+        public virtual List<TEntity> GetAll()
         {
             return DbContext.Set<TEntity>().AsNoTracking().ToList();
         }
 
-        public async Task<List<TEntity>> GetAllAsync()
+        public virtual async Task<List<TEntity>> GetAllAsync()
         {
             return await DbContext.Set<TEntity>().AsNoTracking().ToListAsync();
         }

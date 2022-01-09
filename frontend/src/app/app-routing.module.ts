@@ -21,6 +21,9 @@ const routes: Routes = [
     loadChildren: () => import('./modules/ingredients/ingredients.module').then(m => m.IngredientsModule)
   },
   { path: 'refresh', component: RefreshComponent },
+  { path: 'products',
+    loadChildren: () => import('./modules/products/products.module').then(m => m.ProductsModule)
+  },
 ];
 
 @NgModule({

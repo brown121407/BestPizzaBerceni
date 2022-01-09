@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.ProductRepository;
 
 namespace BestPizzaBerceni.Controllers
 {
@@ -10,9 +11,9 @@ namespace BestPizzaBerceni.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IRepository<Product, int> _productsRepository;
+        private readonly IProductRepository _productsRepository;
 
-        public ProductsController(IRepository<Product, int> productsRepository)
+        public ProductsController(IProductRepository productsRepository)
         {
             _productsRepository = productsRepository;
         }
