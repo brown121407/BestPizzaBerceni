@@ -8,6 +8,7 @@ using BestPizzaBerceni.Data.Models;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
 using BestPizzaBerceni.Repositories.ProductRepository;
+using BestPizzaBerceni.Repositories.RoleRepository;
 using BestPizzaBerceni.Repositories.UserRepository;
 using BestPizzaBerceni.Services.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -101,6 +102,7 @@ namespace BestPizzaBerceni
             services.AddScoped<IRepository<Order, int>, Repository<Order, int>>();
             services.AddScoped<IRepository<OrderStatusUpdate, int>, Repository<OrderStatusUpdate, int>>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
