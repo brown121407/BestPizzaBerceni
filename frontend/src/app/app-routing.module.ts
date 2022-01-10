@@ -21,6 +21,13 @@ const routes: Routes = [
     loadChildren: () => import('./modules/ingredients/ingredients.module').then(m => m.IngredientsModule)
   },
   { path: 'refresh', component: RefreshComponent },
+  { path: 'products',
+    loadChildren: () => import('./modules/products/products.module').then(m => m.ProductsModule)
+  },
+  {
+    path: 'users',
+    loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule)
+  }
 ];
 
 @NgModule({

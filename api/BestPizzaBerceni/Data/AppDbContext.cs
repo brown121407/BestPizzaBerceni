@@ -13,6 +13,12 @@ namespace BestPizzaBerceni.Data
 
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.EnableSensitiveDataLogging();
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -34,5 +40,8 @@ namespace BestPizzaBerceni.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
+        public DbSet<User> ourUsers { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
     }
 }

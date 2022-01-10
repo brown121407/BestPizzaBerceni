@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BestPizzaBerceni.Data.DTOs;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.RoleRepository;
 using BestPizzaBerceni.Repositories.UserRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,12 @@ namespace BestPizzaBerceni.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _usersRepository;
+        private readonly IRoleRepository _rolesRepository;
 
-        public UsersController(IUserRepository usersRepository)
+        public UsersController(IUserRepository usersRepository, IRoleRepository rolesRepository)
         {
             _usersRepository = usersRepository;
+            _rolesRepository = rolesRepository;
         }
 
         [HttpGet]
@@ -49,7 +52,18 @@ namespace BestPizzaBerceni.Controllers
             
             realUser.FirstName = user.FirstName;
             realUser.LastName = user.LastName;
-            realUser.Email = user.Email;
+            //realUser.Email = user.Email;
+            realUser.Roles.Clear();
+
+            foreach (var roleName in user.Roles)
+            {
+                var role = await _rolesRepository.GetByNameAsync(roleName);
+                if (role is null)
+                {
+                    return NotFound();
+                }
+                realUser.Roles.Add(role);
+            }
             
             await _usersRepository.UpdateAsync(realUser);
 
