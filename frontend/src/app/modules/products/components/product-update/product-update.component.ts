@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {IIngredient} from "../../../../../models/ingredient";
-import {IProduct} from "../../../../../models/product";
-import {ProductService} from "../../../services/product.service";
+import {IIngredient} from "../../../../models/ingredient";
+import {IProduct, IProductUpdate} from "../../../../models/product";
+import {ProductService} from "../../services/product.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
-import {IngredientService} from "../../../../ingredients/services/ingredient.service";
+import {IngredientService} from "../../../ingredients/services/ingredient.service";
 import {switchMap} from "rxjs";
-import {IProductVariant} from "../../../../../models/product-variant";
+import {IProductVariant} from "../../../../models/product-variant";
 
 @Component({
   selector: 'app-product-update',
@@ -18,7 +18,7 @@ export class ProductUpdateComponent implements OnInit {
   formGroup!: FormGroup;
   isLoading: boolean = false;
   ingredients!: IIngredient[];
-  product!: IProduct;
+  product!: IProductUpdate;
   id!: number;
   productVariants: IProductVariant[] = [];
 
@@ -29,25 +29,29 @@ export class ProductUpdateComponent implements OnInit {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.isLoading = true;
     this.productService.getProductById(this.id).subscribe((res: IProduct) => {
-      this.product = res;
+      this.product = {
+        name: res.name,
+        ingredients: res.ingredients!.map(x => x.id),
+        productVariants: res.productVariants!.map(x => x.id!),
+      };
       this.productService.getProductVariants().subscribe((result: IProductVariant[]) => {
-        this.productVariants = result;
-        this.productVariants.filter(x => x.product!.id == this.product.id);
+        this.productVariants = result.filter((variant: IProductVariant) =>{
+          const index = this.product.productVariants.findIndex(x => x == variant.id);
+          return index != -1;
+        });
       });
-      console.log(this.productVariants);
+
       this.formGroup = this.formBuilder.group({
-        id: [this.product?.id, Validators.required],
+        id: [this.id, Validators.required],
         name: [this.product?.name, Validators.required],
         checkboxes: new FormArray([])
       })
-      console.log(this.product);
+
       this.ingredientService.getIngredients().subscribe((ingred: IIngredient[]) => {
         this.ingredients = ingred;
         this.ingredients.forEach((_) => (this.formGroup.get('checkboxes') as FormArray).push(new FormControl(false)))
-        this.product.ingredients!.forEach((ingredient: IIngredient) => {
-          const index = this.ingredients.findIndex(x => x.id == ingredient.id);
-          console.log(ingredient);
-          console.log(index);
+        this.product.ingredients!.forEach((idIngred: number) => {
+          const index = this.ingredients.findIndex(x => x.id == idIngred);
           if (index != -1) {
             (this.formGroup.get('checkboxes') as FormArray).at(index).setValue(true);
           }
@@ -63,28 +67,27 @@ export class ProductUpdateComponent implements OnInit {
   }
 
   updateProduct() {
-    console.log(this.product);
     this.isLoading = true;
-    console.log(this.formGroup.value);
     const arrayControl = (this.formGroup.get('checkboxes') as FormArray);
-    const ingredients1 = this.ingredients.filter((_, index) => arrayControl.at(index).value);
-    console.log(ingredients1);
+    const ingredients1 = this.ingredients.filter((_, index) => arrayControl.at(index).value)
+      .map((ingredient:IIngredient) => ingredient.id);
+
     this.product.ingredients = ingredients1;
-    this.product.id = this.id;
     this.product.name = this.formGroup.get('name')?.value;
-    // const product = {
-    //   id: this.id,
-    //   name: this.formGroup.get('name')!.value,
-    //   ingredients:  ingredients1
-    // }
-    console.log(this.product);
-    this.productService.updateProduct(this.product).subscribe({
+
+    this.productService.updateProduct(this.id, this.product).subscribe({
       next: (_) => {
         this.isLoading = false;
         this.toastr.success('Successfully updated product!');
         this.goToPage(`/products/` + this.id.toString());
       }, error: (err: any) => this.toastr.error(JSON.stringify(err))
     });
+  }
+  deleteVariant(variantId: number): void{
+      this.productService.deleteProductVariantById(variantId).subscribe((_) => {
+        this.toastr.success("Product Variant deleted successfully");
+        this.productVariants = this.productVariants.filter((prod: IProduct) => prod.id !== variantId);
+      })
   }
 
 

@@ -29,27 +29,30 @@
         </mat-card>
       </form>
       <div class="button-row">
-        <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="updateProduct()">Upgrade Ingredient</button>
-        <button mat-raised-button color="primary" class="btn-add" (click)="goToPage('/ingredients/list')">Go Back</button>
+        <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="updateProduct()">Update Product</button>
+        <a routerLink="/products/{{id}}/variants/new" mat-raised-button class = "btn-add" color="primary">Add Product Variant</a>
+        <button mat-raised-button color="primary" class="btn-add" (click)="goToPage('/products/list')">Go Back</button>
+        <span class="spacer"></span>
       </div>
         <mat-card-title>Product Variants:</mat-card-title>
           <li *ngFor="let variant of productVariants; index as k">
               <mat-card>
                 <mat-card-title>{{variant.name}}</mat-card-title>
+                <div class="button-row">
+                  <a routerLink="/products/{{id}}/variants/{{variant.id!}}" mat-raised-button class="btn-add"  color="primary">Edit</a>
+                  <button mat-raised-button class="btn-add"  color="warn" (click)="deleteVariant(variant.id!)">Delete</button>
+                </div>
                 <mat-chip-list aria-label="Info-label">
-                  <mat-chip  color="warn" selected>{{variant.quantity}}</mat-chip>
-                  <mat-chip  color="warn" selected>{{variant.unit}}</mat-chip>
-                  <mat-chip  color="accent" selected>{{variant.price}}</mat-chip>
+                  <mat-chip  color="warn" selected>{{variant.quantity + variant.unit}}</mat-chip>
+                  <mat-chip  color="accent" selected>{{variant.price + "€"}}</mat-chip>
                 </mat-chip-list>
+
               </mat-card>
           </li>
         <p *ngIf="productVariants.length <= 0">
           <mat-card><mat-card-title>You don't have any product variants. </mat-card-title></mat-card>
         </p>
-      <div class="ingredients-actions">
-        <a routerLink="/products/{{this.product.id}}/variants/new" mat-raised-button class = "info-button" color="primary">Add Product Variant</a>
-        <span class="spacer"></span>
-      </div>
+
       </mat-card>
   </ng-template>
 </div>
