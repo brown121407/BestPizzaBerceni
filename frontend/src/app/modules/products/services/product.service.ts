@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {IProduct} from "../../../models/product";
+import { IProduct, IProductCreate, IProductUpdate } from "../../../models/product";
 import {IProductVariant} from "../../../models/product-variant";
 
 @Injectable({
@@ -18,7 +18,7 @@ export class ProductService {
     return this.httpClient.get<IProduct[]>(`${environment.apiUrl}/products`, { withCredentials: true });
   }
 
-  addProduct(product: IProduct): Observable<IProduct> {
+  addProduct(product: IProductCreate): Observable<IProduct> {
     return this.httpClient.post<IProduct>(`${environment.apiUrl}/products`, product);
   }
 
@@ -30,8 +30,8 @@ export class ProductService {
     return this.httpClient.delete(`${environment.apiUrl}/products/` + productId.toString());
   }
 
-  updateProduct(product: IProduct): Observable<any>{
-    return this.httpClient.put(`${environment.apiUrl}/products/` + product.id!.toString(), product);
+  updateProduct(id: number, product: IProductUpdate): Observable<any>{
+    return this.httpClient.put(`${environment.apiUrl}/products/${id}`, product);
   }
 
   //For Product-Variant

@@ -39,13 +39,13 @@ namespace BestPizzaBerceni.Repositories
 
         public void Create(TEntity entity)
         {
-            DbContext.Set<TEntity>().Add(entity);
+            DbContext.Set<TEntity>().Update(entity);
             DbContext.SaveChanges();
         }
 
         public async Task CreateAsync(TEntity entity)
         {
-            DbContext.Set<TEntity>().Add(entity);
+            DbContext.Set<TEntity>().Update(entity);
             await DbContext.SaveChangesAsync();
         }
 

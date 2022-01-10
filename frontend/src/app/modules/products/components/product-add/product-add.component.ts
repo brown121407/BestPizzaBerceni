@@ -6,7 +6,7 @@ import {ToastrService} from "ngx-toastr";
 import {IIngredient} from "../../../../models/ingredient";
 import {IngredientService} from "../../../ingredients/services/ingredient.service";
 import {Observable, switchMap} from "rxjs";
-import {IProduct} from "../../../../models/product";
+import { IProduct, IProductCreate } from "../../../../models/product";
 
 @Component({
   selector: 'app-product-add',
@@ -38,31 +38,26 @@ export class ProductAddComponent implements OnInit {
   }
 
   addProd(): void {
-    console.log(this.products);
     this.isLoading = true;
-    console.log(this.formGroup.value);
     const arrayControl = (this.formGroup.get('checkboxes') as FormArray);
-    const ingredients1 = this.ingredients.filter((_, index) => arrayControl.at(index).value);
-    console.log(ingredients1);
-    const product = {
+    const ingredients = this.ingredients.filter((_, index) => arrayControl.at(index).value);
+    const product: IProductCreate = {
       name: this.formGroup.get('name')!.value,
-      //ingredients:  ingredients1
-    }
-    console.log(product);
+      ingredients: ingredients.map((x: IIngredient) => x.id),
+      productVariants: []
+    };
+
     this.productService.addProduct(product)
-      .pipe(switchMap((product: any) => {
-        product.ingredients = ingredients1;
-        return this.productService.updateProduct(product)
-      })).subscribe({
-      next: (_) => {
-        this.isLoading = false;
-        this.toastr.success("Product added successfully");
-        this.goToPage(`/products/list`);
-      },
-      error: (err: any) => {
-        this.toastr.error(JSON.stringify(err));
-        this.isLoading = false;
-      }
-    });
+      .subscribe({
+        next: (_) => {
+          this.isLoading = false;
+          this.toastr.success("Product added successfully");
+          this.goToPage(`/products/list`);
+        },
+        error: (err: any) => {
+          this.toastr.error(JSON.stringify(err));
+          this.isLoading = false;
+        }
+      });
   }
 }
