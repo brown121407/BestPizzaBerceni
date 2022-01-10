@@ -1,0 +1,55 @@
+<div class="container">
+  <mat-spinner *ngIf="isLoading else loaded"></mat-spinner>
+  <ng-template #loaded>
+    <mat-card class="add-ing-body" ><mat-card-title>Update Product {{product.name!}} </mat-card-title>
+      <form [formGroup]="formGroup">
+        <mat-card>
+          <mat-form-field appearance="fill" color="primary">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" formControlName="name">
+          </mat-form-field>
+          <h3>Select ingredients:</h3>
+          <ng-container formArrayName="checkboxes">
+            <ul>
+              <li *ngFor="let ingredient of ingredients; index as i">
+                <mat-card>
+                  <p><mat-checkbox [formControlName]="i">
+                    <mat-card-title>
+                      {{ ingredient.name}}
+                    </mat-card-title>
+                    <mat-chip-list aria-label="Info-label">
+                      <mat-chip *ngIf="ingredient.spicy == true;" color="warn" selected>Spicy</mat-chip>
+                      <mat-chip *ngIf="ingredient.allergen == true;" color="accent" selected>Allergen</mat-chip>
+                    </mat-chip-list>
+                  </mat-checkbox></p>
+                </mat-card>
+              </li>
+            </ul>
+          </ng-container>
+        </mat-card>
+      </form>
+      <div class="button-row">
+        <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="updateProduct()">Upgrade Ingredient</button>
+        <button mat-raised-button color="primary" class="btn-add" (click)="goToPage('/ingredients/list')">Go Back</button>
+      </div>
+        <mat-card-title>Product Variants:</mat-card-title>
+          <li *ngFor="let variant of productVariants; index as k">
+              <mat-card>
+                <mat-card-title>{{variant.name}}</mat-card-title>
+                <mat-chip-list aria-label="Info-label">
+                  <mat-chip  color="warn" selected>{{variant.quantity}}</mat-chip>
+                  <mat-chip  color="warn" selected>{{variant.unit}}</mat-chip>
+                  <mat-chip  color="accent" selected>{{variant.price}}</mat-chip>
+                </mat-chip-list>
+              </mat-card>
+          </li>
+        <p *ngIf="productVariants.length <= 0">
+          <mat-card><mat-card-title>You don't have any product variants. </mat-card-title></mat-card>
+        </p>
+      <div class="ingredients-actions">
+        <a routerLink="/products/{{this.product.id}}/variants/new" mat-raised-button class = "info-button" color="primary">Add Product Variant</a>
+        <span class="spacer"></span>
+      </div>
+      </mat-card>
+  </ng-template>
+</div>

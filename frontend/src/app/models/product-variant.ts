@@ -3,7 +3,7 @@ import {ICartItem} from "./cart-item";
 import {IOrderItem} from "./order-item";
 
 export interface IProductVariant {
-  id: number;
+  id?: number;
   name: string;
   quantity: number;
   unit: string;
