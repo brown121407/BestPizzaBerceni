@@ -42,16 +42,16 @@ export class ProductService {
   addProductVariant(productVariant: IProductVariant){
     return this.httpClient.post(`${environment.apiUrl}/productvariants/`, productVariant);
   }
-
-  getProductVariantById(idProductVariant: number): Observable<IProductVariant>{
-    return this.httpClient.get<IProductVariant>(`${environment.apiUrl}/productvariants/` + idProductVariant.toString());
-  }
-
-  deleteProductVariantById(idProductVariant: number): Observable<any>{
-    return this.httpClient.delete(`${environment.apiUrl}/productvariants/` + idProductVariant.toString());
-  }
-
-  updateProductVariant(productVariant: IProductVariant): Observable<any>{
-    return this.httpClient.put(`${environment.apiUrl}/productvariants/` + productVariant.id.toString(), productVariant);
-  }
+  //
+  // getProductVariantsById(id: number): Observable<IProductVariant[]>{
+  //   return this.httpClient.get<IProductVariant[]>(`${environment.apiUrl}/productvariants/` + id.toString());
+  // }
+  //
+  // deleteProductVariantById(idProductVariant: number): Observable<any>{
+  //   return this.httpClient.delete(`${environment.apiUrl}/productvariants/` + idProductVariant.toString());
+  // }
+  //
+  // updateProductVariant(productVariant: IProductVariant): Observable<any>{
+  //   return this.httpClient.put(`${environment.apiUrl}/productvariants/` + productVariant.id.toString(), productVariant);
+  // }
 }

@@ -11,12 +11,17 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatInputModule} from "@angular/material/input";
 import {MatChipsModule} from "@angular/material/chips";
+import { ProductUpdateComponent } from './components/product-update/product-update/product-update.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { ProductVariantAddComponent } from './components/product-variant-add/product-variant-add.component';
 
 
 @NgModule({
   declarations: [
     ProductsComponent,
-    ProductAddComponent
+    ProductAddComponent,
+    ProductUpdateComponent,
+    ProductVariantAddComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +32,8 @@ import {MatChipsModule} from "@angular/material/chips";
     MatFormFieldModule,
     MatCheckboxModule,
     MatInputModule,
-    MatChipsModule
+    MatChipsModule,
+    MatProgressSpinnerModule
   ]
 })
 export class ProductsModule { }
