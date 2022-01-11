@@ -37,37 +37,37 @@ namespace BestPizzaBerceni.Repositories
             return await DbContext.Set<TEntity>().AsNoTracking().ToListAsync();
         }
 
-        public void Create(TEntity entity)
+        public virtual void Create(TEntity entity)
         {
             DbContext.Set<TEntity>().Update(entity);
             DbContext.SaveChanges();
         }
 
-        public async Task CreateAsync(TEntity entity)
+        public virtual async Task CreateAsync(TEntity entity)
         {
             DbContext.Set<TEntity>().Update(entity);
             await DbContext.SaveChangesAsync();
         }
 
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             DbContext.Set<TEntity>().Update(entity);
             DbContext.SaveChanges();
         }
 
-        public async Task UpdateAsync(TEntity entity)
+        public virtual async Task UpdateAsync(TEntity entity)
         {
             DbContext.Set<TEntity>().Update(entity);
             await DbContext.SaveChangesAsync();
         }
 
-        public void Delete(TEntity entity)
+        public virtual void Delete(TEntity entity)
         {
             DbContext.Set<TEntity>().Remove(entity);
             DbContext.SaveChanges();
         }
 
-        public async Task DeleteAsync(TEntity entity)
+        public virtual async Task DeleteAsync(TEntity entity)
         {
             DbContext.Set<TEntity>().Remove(entity);
             await DbContext.SaveChangesAsync();

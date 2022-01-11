@@ -8,3 +8,11 @@ export interface ICoupon {
   user?: IUser;
   orderItem?: IOrderItem;
 }
+
+export interface ICouponCreate {
+  discount: number;
+
+  user: number;
+}
+
+export interface ICouponUpdate extends ICouponCreate {}

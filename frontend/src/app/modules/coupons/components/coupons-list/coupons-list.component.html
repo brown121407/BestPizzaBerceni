@@ -1,6 +1,29 @@
+<h1>Coupons</h1>
+
+<p *ngIf="coupons.length == 0">No coupons found.</p>
+
 <ul>
   <li *ngFor="let coupon of coupons; index as i">
-    aa
+    <mat-card>
+      <mat-card-title>
+        <h2>Coupon code: {{ coupon.id }}</h2>
+      </mat-card-title>
+      <mat-card-content>
+        <p>{{ coupon.discount }}% discount</p>
+        <span class="spacer"></span>
+        <p *ngIf="isAtLeastManager()">
+          Belongs to
+          <a routerLink="/users/{{ coupon.user!.id }}">
+            {{ coupon.user!.firstName + ' ' + coupon.user!.lastName }}
+          </a>
+        </p>
+        <span class="spacer"></span>
+        <div *ngIf="isAtLeastManager()" style="display: flex; gap: 1rem;">
+          <button mat-raised-button color="primary">Update</button>
+          <button mat-raised-button color="warn" (click)="delete(i)">Delete</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </li>
 </ul>
 

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BestPizzaBerceni.Data.DTOs;
+using BestPizzaBerceni.Data.DTOs.User;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
 using BestPizzaBerceni.Repositories.RoleRepository;
@@ -25,15 +27,37 @@ namespace BestPizzaBerceni.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
-            return await _usersRepository.GetAllAsync();
+            var users = (await _usersRepository.GetAllAsync()).Select(user => new UserDTO()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Roles = user.Roles.Select(x => x.Name).ToList()
+            });
+            
+            return Ok(users);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<UserDTO>> GetUser(int id)
         {
-            return await _usersRepository.GetByIdAsync(id);
+            var user = await _usersRepository.GetByIdAsync(id);
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            return new UserDTO
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Roles = user.Roles.Select(x => x.Name).ToList()
+            };
         }
 
         [HttpPut("{id}")]

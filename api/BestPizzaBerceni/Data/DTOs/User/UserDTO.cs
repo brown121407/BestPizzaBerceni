@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using BestPizzaBerceni.Data.Models;
 
-namespace BestPizzaBerceni.Data.DTOs
+namespace BestPizzaBerceni.Data.DTOs.User
 {
     public class UserDTO
     {

@@ -1,0 +1,18 @@
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.spacer {
+  flex-grow: 99;
+}

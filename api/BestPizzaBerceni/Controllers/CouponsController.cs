@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BestPizzaBerceni.Data.DTOs.Coupon;
 using BestPizzaBerceni.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.CouponRepository;
+using BestPizzaBerceni.Repositories.UserRepository;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BestPizzaBerceni.Controllers
@@ -12,11 +15,13 @@ namespace BestPizzaBerceni.Controllers
     [ApiController]
     public class CouponsController: ControllerBase
     {
-        private readonly IRepository<Coupon, int> _couponsRepository;
+        private readonly ICouponRepository _couponsRepository;
+        private readonly IUserRepository _userRepository;
 
-        public CouponsController(IRepository<Coupon, int> couponsRepository)
+        public CouponsController(ICouponRepository couponsRepository, IUserRepository userRepository)
         {
             _couponsRepository = couponsRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -39,12 +44,22 @@ namespace BestPizzaBerceni.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCoupon(int id, Coupon coupon)
+        public async Task<IActionResult> PutCoupon(int id, CouponUpdateDTO dto)
         {
-            if (id != coupon.Id)
+            var coupon = await _couponsRepository.GetByIdAsync(id);
+            if (coupon is null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            var user = await _userRepository.GetByIdAsync(dto.User);
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            coupon.Discount = dto.Discount;
+            coupon.User = user;
 
             await _couponsRepository.UpdateAsync(coupon);
 
@@ -52,8 +67,20 @@ namespace BestPizzaBerceni.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Coupon>> PostCoupon(Coupon coupon)
+        public async Task<ActionResult<Coupon>> PostCoupon(CouponCreateDTO dto)
         {
+            var user = await _userRepository.GetByIdAsync(dto.User);
+            if (user is null)
+            {
+                return NotFound();
+            }
+            
+            var coupon = new Coupon
+            {
+                Discount = dto.Discount,
+                User = user
+            };
+            
             await _couponsRepository.CreateAsync(coupon);
 
             return CreatedAtAction("GetCoupon", new {id = coupon.Id}, coupon);
