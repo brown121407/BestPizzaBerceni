@@ -8,10 +8,12 @@ import {ProductVariantAddComponent} from "./components/product-variant-add/produ
 import {ProductVariantUpdateComponent} from "./components/product-variant-update/product-variant-update.component";
 
 const routes: Routes = [
-  { path: 'list',
-    component: ProductsComponent
+  {
+    path: 'list',
+    component: ProductsComponent,
   },
-  { path: 'new',
+  {
+    path: 'new',
     component: ProductAddComponent
   },
   { path: ':id',
