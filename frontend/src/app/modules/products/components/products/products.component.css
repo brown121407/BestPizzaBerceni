@@ -4,11 +4,14 @@
   flex-wrap: wrap;
   gap: 1rem;
 }
-.ingredient-button{
-  margin-right: 2px;
+.product-button{
+  border-right: 10px;
+  margin-right: 10px;
+  display: inline-block;
 }
 .info-button{
   float: right;
+  border-right: 5px;
   display: inline-block;
 }
 .button-row {

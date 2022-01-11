@@ -34,3 +34,12 @@
 .spacer {
   flex-grow: 99;
 }
+li{
+  list-style-type: none;
+}
+.product-add-buttons{
+  height: 60px;
+}
+.product-var{
+  height: 90px;
+}

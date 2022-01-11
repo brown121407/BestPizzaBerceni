@@ -19,3 +19,13 @@
 .container{
 
 }
+li{
+  list-style-type: none;
+}
+.display-list-item{
+  height: 75px;
+  border-spacing: 5px;
+}
+.product-add-buttons{
+  height: 50px;
+}

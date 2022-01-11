@@ -22,25 +22,11 @@ export class IngredientComponent implements OnInit {
     this.ingredientService.getIngredients().subscribe((res: IIngredient[])  => this.ingredients = res);
   }
 
-  modifyIngredients(): void {
-    this.hasChanged = true;
-  }
-
-  emptyIngredients(): void {
-    this.ingredients = [];
-    this.hasChanged = true;
-  }
-
-  updateIngredients(): void {
-
-    this.hasChanged = false;
-  }
   goToPage(pageName: string){
     this.router.navigate([`${pageName}`]);
   }
 
   deleteIngred(id: number){
-    // const id = Number(this.route.snapshot.paramMap.get('id'));
     this.ingredientService.deleteIngredient(id).subscribe((_) =>
       {
         this.toastr.success("Ingredient deleted successfully");

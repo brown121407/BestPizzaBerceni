@@ -62,7 +62,6 @@ export class ProductUpdateComponent implements OnInit {
   }
 
   goToPage(pageName: string) {
-    //console.log(this.product.id);
     this.router.navigate([`${pageName}`]);
   }
 

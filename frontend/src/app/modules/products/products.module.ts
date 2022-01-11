@@ -15,6 +15,7 @@ import { ProductUpdateComponent } from './components/product-update/product-upda
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { ProductVariantAddComponent } from './components/product-variant-add/product-variant-add.component';
 import { ProductVariantUpdateComponent } from './components/product-variant-update/product-variant-update.component';
+import {MatListModule} from "@angular/material/list";
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { ProductVariantUpdateComponent } from './components/product-variant-upda
     MatCheckboxModule,
     MatInputModule,
     MatChipsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatListModule
   ]
 })
 export class ProductsModule { }

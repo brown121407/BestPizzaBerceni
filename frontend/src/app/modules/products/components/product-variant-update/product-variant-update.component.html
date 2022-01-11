@@ -3,7 +3,6 @@
   <ng-template #loaded>
     <mat-card class="add-ing-body"><mat-card-title>Update Product Variant for {{variant!.name}} </mat-card-title>
       <form [formGroup]="formGroup">
-        <mat-card>
           <mat-form-field appearance="fill" color="primary">
             <mat-label>Name</mat-label>
             <input matInput type="text" formControlName="name">
@@ -25,7 +24,6 @@
           </mat-form-field>
             <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="updateProductVariant()">Update Product Variant</button>
             <button mat-raised-button color="primary" class="btn-add" (click)="goToPage(page)" >Go Back</button>
-        </mat-card>
 
       </form>
 

@@ -1,7 +1,6 @@
 <div class="container">
   <mat-card class="add-ing-body"><mat-card-title>Add Product </mat-card-title>
     <form [formGroup]="formGroup">
-      <mat-card>
         <mat-form-field appearance="fill" color="primary">
           <mat-label>Name</mat-label>
           <input matInput type="text" formControlName="name">
@@ -10,24 +9,23 @@
         <ng-container formArrayName="checkboxes">
           <ul>
             <li *ngFor="let ingredient of ingredients; index as i">
-              <mat-card>
-            <p><mat-checkbox [formControlName]="i">
+
+            <mat-checkbox class="display-list-item" [formControlName]="i">
               <mat-card-title>
                 {{ ingredient.name}}
               </mat-card-title>
               <mat-chip-list aria-label="Info-label">
-                <mat-chip *ngIf="ingredient.spicy == true;" color="warn" selected>Spicy</mat-chip>
-                <mat-chip *ngIf="ingredient.allergen == true;" color="accent" selected>Allergen</mat-chip>
+                <mat-chip *ngIf="ingredient.spicy == true;" color="warn" class="info-ingredient" selected>Spicy</mat-chip>
+                <mat-chip *ngIf="ingredient.allergen == true;" color="accent"  class="info-ingredient"  selected>Allergen</mat-chip>
               </mat-chip-list>
-            </mat-checkbox></p>
-
-                </mat-card>
+            </mat-checkbox>
           </li>
           </ul>
         </ng-container>
-          <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="addProd()">Add Product</button>
-          <button mat-raised-button color="primary" class="btn-add" (click)="goToPage('/products/list')">Go Back</button>
-        </mat-card>
     </form>
+    <div class = "product-add-buttons">
+    <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="addProd()">Add Product</button>
+    <button mat-raised-button color="primary" class="btn-add" (click)="goToPage('/products/list')">Go Back</button>
+    </div>
   </mat-card>
 </div>
