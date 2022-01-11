@@ -34,6 +34,13 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { path: 'refresh', component: RefreshComponent },
+  { path: 'products',
+    loadChildren: () => import('./modules/products/products.module').then(m => m.ProductsModule)
+  },
+  {
+    path: 'users',
+    loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule)
+  }
 ];
 
 @NgModule({
