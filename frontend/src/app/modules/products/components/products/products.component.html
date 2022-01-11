@@ -2,19 +2,17 @@
   <li *ngFor="let product of products; index as i">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>
-          {{ product.name}}
-          <button mat-raised-button class = "info-button" color="warn" (click)="deleteProduct(product.id!)">Delete</button>
+        <mat-card-title>{{ product.name}}</mat-card-title>
           <div *ngFor="let ingredient of product.ingredients; index as j">
-            <mat-card>
-              <mat-card-header>
-                <mat-card-title>
-                  {{ ingredient.name}}
-                  </mat-card-title>
-              </mat-card-header>
-            </mat-card>
+            <mat-chip-list aria-label="Info-label">
+              <mat-chip class="ingredient-button" color="accent" selected>{{ingredient.name}}</mat-chip>
+            </mat-chip-list>
           </div>
-        </mat-card-title>
+        <div class="button-row">
+          <a routerLink="/products/{{product.id!}}" mat-raised-button class = "info-button" color="primary">Edit</a>
+          <button mat-raised-button class = "info-button" color="warn" (click)="deleteProduct(product.id!)">Delete</button>
+        </div>
+        <span class="spacer"></span>
       </mat-card-header>
     </mat-card>
   </li>
