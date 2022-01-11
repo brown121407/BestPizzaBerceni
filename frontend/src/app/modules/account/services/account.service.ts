@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, map, Observable, switchMap, tap} from "rxjs";
-import {IUser, IUserLogin, IUserSignup} from "../../../models/user";
-import {AccountModule} from "../account.module";
+import { checkRoles, IUser, IUserLogin, IUserSignup, UserRole } from "../../../models/user";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +20,10 @@ export class AccountService {
     const userJson = localStorage.getItem('user');
     this.currentUserSubject = new BehaviorSubject<IUser | null>(userJson ? JSON.parse(userJson) : null);
     this.currentUser$ = this.currentUserSubject.asObservable();
+  }
+
+  checkRoles(expectedRole: UserRole): boolean {
+    return checkRoles(this.currentUser!, expectedRole);
   }
 
   signUp(user: IUserSignup): Observable<any> {
