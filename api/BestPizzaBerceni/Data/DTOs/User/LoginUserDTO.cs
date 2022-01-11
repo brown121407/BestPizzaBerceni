@@ -1,4 +1,4 @@
-﻿namespace BestPizzaBerceni.Data.DTOs
+﻿namespace BestPizzaBerceni.Data.DTOs.User
 {
     public class LoginUserDTO
     {

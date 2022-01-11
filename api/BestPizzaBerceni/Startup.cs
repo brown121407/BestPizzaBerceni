@@ -7,7 +7,9 @@ using BestPizzaBerceni.Data;
 using BestPizzaBerceni.Data.Models;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.CouponRepository;
 using BestPizzaBerceni.Repositories.ProductRepository;
+using BestPizzaBerceni.Repositories.RoleRepository;
 using BestPizzaBerceni.Repositories.UserRepository;
 using BestPizzaBerceni.Services.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -100,6 +102,8 @@ namespace BestPizzaBerceni
             services.AddScoped<IRepository<Address, int>, Repository<Address, int>>();
             services.AddScoped<IRepository<Order, int>, Repository<Order, int>>();
             services.AddScoped<IRepository<OrderStatusUpdate, int>, Repository<OrderStatusUpdate, int>>();
+            services.AddScoped<ICouponRepository, CouponRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserService, UserService>();
         }
 
