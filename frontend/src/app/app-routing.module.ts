@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import {IngredientComponent} from "./modules/ingredients/components/ingredient/ingredient.component";
 import {IngredientPageComponent} from "./modules/ingredients/components/ingredient-page/ingredient-page.component";
 import {IngredientUpdateComponent} from "./modules/ingredients/components/ingredient-update/ingredient-update.component";
@@ -10,7 +9,6 @@ import { AuthGuard } from "./modules/account/guards/auth.guard";
 import { PNFComponent } from "./modules/errors/components/page-not-found/page-not-found.component";
 
 const routes: Routes = [
-  { path: '', component: MenuComponent},
   {
     path: 'account',
     loadChildren: () => import('./modules/account/account.module').then(m => m.AccountModule)

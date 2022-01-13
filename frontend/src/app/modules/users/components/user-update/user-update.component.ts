@@ -43,7 +43,6 @@ export class UserUpdateComponent implements OnInit {
     });
   }
 
-
   goToPage(pageName: string){
     this.router.navigate([`${pageName}`]);
   }

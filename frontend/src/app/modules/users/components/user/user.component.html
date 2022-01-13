@@ -14,12 +14,9 @@
             <mat-list-item> Email: {{user.email}}</mat-list-item>
           </mat-list>
         </div>
-
-        <div *ngFor="let role of user.roles">
-          <mat-chip-list aria-label="Info-label">
-            <mat-chip color="accent" selected>{{role}}</mat-chip>
-          </mat-chip-list>
-        </div>
+        <mat-chip-list aria-label="Info-label">
+          <mat-chip *ngFor="let role of user.roles; index as j"> {{role}} </mat-chip>
+        </mat-chip-list>
 
         <div class="button-row">
           <a routerLink="/users/{{user.id}}" mat-raised-button class = "info-button" color="primary">Edit</a>
