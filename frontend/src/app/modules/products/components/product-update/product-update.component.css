@@ -1,0 +1,36 @@
+.info-ingredient{
+  display:      inline-block;
+  float: left;
+  text-space: 10px;
+}
+.buttons{
+  padding-left: 20px;
+  position: center;
+}
+.btn-add{
+  margin-top: 20px;
+  float: right;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+.add-ing-body{
+  height: 100%;
+}
+.button-row {
+  display: table-cell;
+  width: 100%;
+  float: right;
+  margin-top: 5px;
+  height: 30px;
+}
+.modify-button{
+  float: right;
+  margin-right: 20px;
+}
+.button-row .mat-button-base {
+  margin: 0px 5px 5px 5px;
+}
+
+.spacer {
+  flex-grow: 99;
+}

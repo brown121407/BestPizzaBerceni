@@ -4,15 +4,17 @@
   flex-wrap: wrap;
   gap: 1rem;
 }
+.ingredient-button{
+  margin-right: 2px;
+}
 .info-button{
-  display:      inline-block;
   float: right;
+  display: inline-block;
 }
 .button-row {
   display: table-cell;
   width: 100%;
   float: right;
-
 }
 .modify-button{
   float: right;
