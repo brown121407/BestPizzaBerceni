@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Threading.Tasks;
 using BestPizzaBerceni.Data.DTOs;
+using BestPizzaBerceni.Data.DTOs.User;
 using Microsoft.AspNetCore.Identity;
 
 namespace BestPizzaBerceni.Services.UserService

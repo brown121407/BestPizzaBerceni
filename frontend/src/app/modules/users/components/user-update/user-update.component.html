@@ -1,0 +1,28 @@
+<div class="container">
+  <mat-spinner *ngIf="isLoading else loaded"></mat-spinner>
+  <ng-template #loaded>
+    <mat-card class="add-ing-body" ><mat-card-title>Update User {{user.firstName}} {{user.lastName}}</mat-card-title>
+      <form [formGroup]="formGroup">
+        <mat-card>
+          <mat-form-field appearance="fill" color="primary">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" formControlName="firstname">
+          </mat-form-field>
+          <mat-form-field appearance="fill" color="primary">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" formControlName="lastname">
+          </mat-form-field>
+          <h3>Select user role:</h3>
+          <ng-container  formArrayName="roles">
+              <p *ngFor="let role of roles; index as i">
+                <mat-checkbox [formControlName]="i">{{role}}</mat-checkbox>
+              </p>
+          </ng-container>
+        </mat-card>
+
+      </form>
+      <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="updateUsr()">Update User</button>
+      <button mat-raised-button color="primary" class="btn-add" (click)="goToPage('/users/list')">Go Back</button>
+    </mat-card>
+  </ng-template>
+</div>

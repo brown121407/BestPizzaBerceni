@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <Compile Remove="Data\Models\Adress.cs" />
+      <Compile Remove="Repositories\UserRepository.cs" />
     </ItemGroup>
 
     <ItemGroup>

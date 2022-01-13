@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BestPizzaBerceni.Data.DTOs;
+using BestPizzaBerceni.Data.DTOs.User;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
 using BestPizzaBerceni.Repositories.UserRepository;

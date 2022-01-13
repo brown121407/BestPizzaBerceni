@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace BestPizzaBerceni.Data.DTOs.Product
+﻿namespace BestPizzaBerceni.Data.DTOs.ProductVariant
 {
-    public class ProductVariantCreateDTO
+    public class ProductVariantUpdateDTO
     {
         public string Name { get; set; }
         public int Quantity { get; set; }

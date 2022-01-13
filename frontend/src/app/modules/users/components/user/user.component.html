@@ -1,0 +1,42 @@
+<script src="../../../users/services/user.service.ts"></script>
+<ul>
+  <li *ngFor="let user of users; index as i">
+    <mat-card>
+      <mat-card-header>
+        <div id="user-info">
+          <mat-card-title>
+            {{ user.firstName}} {{ user.lastName}}
+
+          </mat-card-title>
+
+          <mat-list>
+            <mat-list-item> Id: {{ user.id}}</mat-list-item>
+            <mat-list-item> Email: {{user.email}}</mat-list-item>
+          </mat-list>
+        </div>
+        <mat-chip-list aria-label="Info-label">
+          <mat-chip *ngFor="let role of user.roles; index as j"> {{role}} </mat-chip>
+        </mat-chip-list>
+
+        <div class="button-row">
+          <a routerLink="/users/{{user.id}}" mat-raised-button class = "info-button" color="primary">Edit</a>
+          <button mat-raised-button class = "info-button" color="warn" (click)="dltUser(user.id)">Delete</button>
+        </div>
+        <span class="spacer"></span>
+      </mat-card-header>
+
+
+    </mat-card>
+  </li>
+  <li>
+
+  </li>
+</ul>
+
+<p *ngIf="users.length <= 0">
+  <mat-card><mat-card-title>There aren't any users. </mat-card-title></mat-card>
+</p>
+
+
+
+

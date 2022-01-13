@@ -1,1 +1,26 @@
-<p>new-coupon works!</p>
+<mat-card>
+  <h1>New Coupon</h1>
+
+  <form *ngIf="!isLoading" [formGroup]="formGroup" (submit)="submit()">
+    <mat-form-field>
+      <mat-label>Discount (%)</mat-label>
+      <input matInput type="number" min="1" max="100" formControlName="discount">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>User</mat-label>
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser">
+        <mat-option *ngFor="let user of users" [value]="user">
+          {{ user.firstName + ' ' + user.lastName }}
+        </mat-option>
+      </mat-autocomplete>
+      <input type="text" matInput formControlName="user" [matAutocomplete]="auto">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="formGroup.invalid">
+      Submit
+    </button>
+  </form>
+
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+</mat-card>

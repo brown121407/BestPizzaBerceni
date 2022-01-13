@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BestPizzaBerceni.Data.DTOs.Product;
+using BestPizzaBerceni.Data.DTOs.ProductVariant;
 using Microsoft.AspNetCore.Mvc;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;

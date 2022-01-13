@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BestPizzaBerceni.Data.DTOs;
+using BestPizzaBerceni.Data.DTOs.User;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.RoleRepository;
 using BestPizzaBerceni.Repositories.UserRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,22 +18,46 @@ namespace BestPizzaBerceni.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _usersRepository;
+        private readonly IRoleRepository _rolesRepository;
 
-        public UsersController(IUserRepository usersRepository)
+        public UsersController(IUserRepository usersRepository, IRoleRepository rolesRepository)
         {
             _usersRepository = usersRepository;
+            _rolesRepository = rolesRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
-            return await _usersRepository.GetAllAsync();
+            var users = (await _usersRepository.GetAllAsync()).Select(user => new UserDTO()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Roles = user.Roles.Select(x => x.Name).ToList()
+            });
+            
+            return Ok(users);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<UserDTO>> GetUser(int id)
         {
-            return await _usersRepository.GetByIdAsync(id);
+            var user = await _usersRepository.GetByIdAsync(id);
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            return new UserDTO
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Roles = user.Roles.Select(x => x.Name).ToList()
+            };
         }
 
         [HttpPut("{id}")]
@@ -49,7 +76,18 @@ namespace BestPizzaBerceni.Controllers
             
             realUser.FirstName = user.FirstName;
             realUser.LastName = user.LastName;
-            realUser.Email = user.Email;
+            //realUser.Email = user.Email;
+            realUser.Roles.Clear();
+
+            foreach (var roleName in user.Roles)
+            {
+                var role = await _rolesRepository.GetByNameAsync(roleName);
+                if (role is null)
+                {
+                    return NotFound();
+                }
+                realUser.Roles.Add(role);
+            }
             
             await _usersRepository.UpdateAsync(realUser);
 
