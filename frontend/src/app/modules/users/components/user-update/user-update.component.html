@@ -13,12 +13,11 @@
             <input matInput type="text" formControlName="lastname">
           </mat-form-field>
           <h3>Select user role:</h3>
-          <p><mat-checkbox formControlName="admin">Admin</mat-checkbox></p>
-          <p><mat-checkbox formControlName="manager" >Manager</mat-checkbox></p>
-          <p><mat-checkbox formControlName="store-employee" >Store employee</mat-checkbox></p>
-          <p><mat-checkbox formControlName="delivery-employee" >Delivery employee</mat-checkbox></p>
-          <p><mat-checkbox formControlName="loyal-customer" >Loyal customer</mat-checkbox></p>
-          <p><mat-checkbox formControlName="customer" >Customer</mat-checkbox></p>
+          <ng-container  formArrayName="roles">
+              <p *ngFor="let role of roles; index as i">
+                <mat-checkbox [formControlName]="i">{{role}}</mat-checkbox>
+              </p>
+          </ng-container>
         </mat-card>
 
       </form>

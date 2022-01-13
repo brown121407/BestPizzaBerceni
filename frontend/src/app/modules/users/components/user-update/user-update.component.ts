@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {IUser} from "../../../../models/user";
+import {checkRoles, IUser, rolesAtLeast, UserRole} from "../../../../models/user";
 import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -17,6 +17,7 @@ export class UserUpdateComponent implements OnInit {
   id!: number;
   roles: UserRole[] = allRoles;
   formGroup!: FormGroup;
+  //rolesString: string[] = ['Admin', 'Manager', 'Store Employee', 'Delivery Employee','Loyal Customer', 'Customer'];
 
   constructor(private userService: UserService, private router: Router, private route:ActivatedRoute, private toastr: ToastrService, private fb: FormBuilder) { }
 
@@ -50,7 +51,12 @@ export class UserUpdateComponent implements OnInit {
   updateUsr():void {
     this.isLoading = true;
     if(typeof(this.formGroup.getRawValue()) != "undefined") {
-      this.userService.updateUser(this.formGroup.value).subscribe({
+      const arrayControl = this.formGroup.get('roles') as FormArray;
+      const roles1 = this.roles.filter((role: string, index: number) => arrayControl.at(index).value);
+      this.user.lastName = this.formGroup.get('lastname')!.value;
+      this.user.firstName = this.formGroup.get('firstname')!.value;
+      this.user.roles = roles1;
+      this.userService.updateUser(this.user).subscribe({
         next: (_) => {
           this.isLoading = false;
           this.toastr.success('Successfully updated user!');
