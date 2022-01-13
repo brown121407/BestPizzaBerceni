@@ -23,6 +23,8 @@ export interface IUser {
   lastName: string;
   roles: UserRole[];
   token: string;
+
+  addresses: number[];
 }
 
 export interface IUserSignup {

@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BestPizzaBerceni.Data;
+using BestPizzaBerceni.Data.DTOs.Address;
 using BestPizzaBerceni.Data.Models;
 using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.UserRepository;
 
 namespace BestPizzaBerceni.Controllers
 {
@@ -16,10 +18,12 @@ namespace BestPizzaBerceni.Controllers
     public class AddressesController : ControllerBase
     {
         private readonly IRepository<Address, int> _addressRepository;
+        private readonly IUserRepository _userRepository;
          
-        public AddressesController(IRepository<Address, int> repository )
+        public AddressesController(IRepository<Address, int> addressRepository, IUserRepository userRepository  )
         {
-            _addressRepository = repository;
+            _addressRepository = addressRepository;
+            _userRepository = userRepository;
         }
 
         // GET: api/Addresses
@@ -46,28 +50,65 @@ namespace BestPizzaBerceni.Controllers
         // PUT: api/Addresses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAddress(int id, Address address)
+        public async Task<IActionResult> PutAddress(int id, AddressUpdateDTO dto)
         {
-            if (id != address.Id)
+            var address = await _addressRepository.GetByIdAsync(id);
+            if (address is null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
+            var user = await _userRepository.GetByIdAsync(dto.User);
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            address.Id = dto.Id; 
+            address.County = dto.County;
+            address.City = dto.City;
+            address.AddressLine = dto.AddressLine;
+            address.PostalCode = dto.PostalCode;
+            address.PhoneNumber = dto.PhoneNumber;
+            address.User = user;
+            
             await _addressRepository.UpdateAsync(address);
 
-            return NoContent();
+            return Ok(address);
         }
 
         // POST: api/Addresses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Address>> PostAddress(Address address)
+        /*public async Task<ActionResult<Address>> PostAddress(Address address)
         {
             await _addressRepository.CreateAsync(address);
 
             return CreatedAtAction("GetAddress", new { id = address.Id }, address);
-        }
+        }*/
+        public async Task<ActionResult<Address>> PostAddress(AddressCreateDTO dto)
+        {
+            var user = await _userRepository.GetByIdAsync(dto.User);
+            if (user is null)
+            {
+                return NotFound();
+            }
 
+            var address = new Address
+            {
+                Id = dto.Id,
+                County = dto.County,
+                City = dto.City,
+                AddressLine = dto.AddressLine,
+                PostalCode = dto.PostalCode,
+                PhoneNumber = dto.PhoneNumber,
+                User = user
+            };
+            await _addressRepository.CreateAsync(address);
+
+            return CreatedAtAction("GetAddress", new {id = address.Id}, address);
+        }
+        
         // DELETE: api/Addresses/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAddress(int id)
