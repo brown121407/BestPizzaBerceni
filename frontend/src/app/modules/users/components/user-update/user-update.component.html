@@ -21,8 +21,29 @@
         </mat-card>
 
       </form>
-      <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="updateUsr()">Update User</button>
-      <button mat-raised-button color="primary" class="btn-add" (click)="goToPage('/users/list')">Go Back</button>
+      <div class="button-row">
+        <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="updateUsr()">Update User</button>
+        <a routerLink="/users/{{id}}/address/new" mat-raised-button class = "btn-add" color="primary">Add Address</a>
+        <button mat-raised-button color="primary" class="btn-add" (click)="goToPage('/users/list')">Go Back</button>
+        <span class="spacer"></span>
+      </div>
+      <br>
+      <mat-card-title>Addresses:</mat-card-title>
+      <ul><li *ngFor="let address of addresses; index as k">
+          <h2>{{address.addressLine}}</h2>
+          <h3>{{address.county}}, {{address.city}}</h3>
+          <h3>Postal Code: {{address.postalCode}}</h3>
+          <h3>Phone: {{address.phoneNumber}}</h3>
+          <div class="buttons">
+            <a routerLink="/users/{{id}}/address/{{address.id!}}" mat-raised-button class="btn-add"  color="primary">Edit</a>
+            <button mat-raised-button class="btn-add"  color="warn" (click)="deleteAddress(address.id!)">Delete</button>
+          </div>
+
+      </li>
+      </ul>
+      <p *ngIf="addresses.length <= 0">
+        <mat-card><mat-card-title>You don't have any addresses. </mat-card-title></mat-card>
+      </p>
     </mat-card>
   </ng-template>
 </div>

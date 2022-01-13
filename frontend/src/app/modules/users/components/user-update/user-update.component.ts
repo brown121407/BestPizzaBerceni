@@ -5,6 +5,10 @@ import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {allRoles} from "../../../../models/user";
+import {IAddress} from "../../../../models/address";
+import {IProductVariant} from "../../../../models/product-variant";
+import {environment} from "../../../../../environments/environment";
+import {IProduct} from "../../../../models/product";
 
 @Component({
   selector: 'app-user-update',
@@ -17,6 +21,7 @@ export class UserUpdateComponent implements OnInit {
   id!: number;
   roles: UserRole[] = allRoles;
   formGroup!: FormGroup;
+  addresses: IAddress[] = [];
   //rolesString: string[] = ['Admin', 'Manager', 'Store Employee', 'Delivery Employee','Loyal Customer', 'Customer'];
 
   constructor(private userService: UserService, private router: Router, private route:ActivatedRoute, private toastr: ToastrService, private fb: FormBuilder) { }
@@ -32,7 +37,12 @@ export class UserUpdateComponent implements OnInit {
         lastname: [this.user?.lastName, Validators.required],
         roles: new FormArray([])
       });
-
+      this.userService.getAddresses().subscribe(res => {
+        this.addresses = res.filter((address: IAddress) =>{
+          const index = this.user.addresses.findIndex((x: number) => x == address.id);
+          return index != -1;
+        });
+      })
       this.roles.forEach((_) => (this.formGroup.get('roles') as FormArray).push(new FormControl(false)));
       this.user.roles.forEach((role : UserRole) => {
         const index = this.roles.findIndex(x => x === role); //rolesString
@@ -65,5 +75,10 @@ export class UserUpdateComponent implements OnInit {
       })
     }
   }
-
+  deleteAddress(id: number): void{
+    this.userService.deleteAddressById(id).subscribe((_) => {
+      this.toastr.success("Address deleted successfully");
+      this.addresses = this.addresses.filter((prod: IAddress) => prod.id !== id);
+    })
+  }
 }
