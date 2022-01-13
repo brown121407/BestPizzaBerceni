@@ -4,6 +4,7 @@ import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
+import {allRoles} from "../../../../models/user";
 
 @Component({
   selector: 'app-user-update',
@@ -14,18 +15,7 @@ export class UserUpdateComponent implements OnInit {
   user!: IUser;
   isLoading: boolean = false;
   id!: number;
-  roles: string[] = ['admin', 'mananger', 'store-employee', 'loyal-customer', 'customer', 'delivery-employee'];
-  // formGroup: FormGroup = new FormGroup({
-  //   'id' : new FormControl(0, Validators.required),
-  //   'firstname': new FormControl('ana', Validators.required),
-  //   'lastname': new FormControl('', Validators.required),
-  //   'admin': new FormControl(false),
-  //   'manager': new FormControl(false),
-  //   'store-employee': new FormControl(false),
-  //   'delivery-employee': new FormControl(false),
-  //   'loyal-customer': new FormControl(false),
-  //   'customer': new FormControl(false),
-  // });
+  roles: UserRole[] = allRoles;
   formGroup!: FormGroup;
 
   constructor(private userService: UserService, private router: Router, private route:ActivatedRoute, private toastr: ToastrService, private fb: FormBuilder) { }
@@ -39,20 +29,19 @@ export class UserUpdateComponent implements OnInit {
         id: [this.user?.id, Validators.required],
         firstname: [this.user?.firstName, Validators.required],
         lastname: [this.user?.lastName, Validators.required],
-        checkboxes: new FormArray([])
-        //tre sa iau rolurile pe care le are acum din roles
+        roles: new FormArray([])
       });
-      this.roles.forEach((_) => (this.formGroup.get('checkboxes') as FormArray).push(new FormControl(false)))
-      this.user.roles.forEach((name: string) => {
-        const index = this.roles.findIndex(x => x == name);
+
+      this.roles.forEach((_) => (this.formGroup.get('roles') as FormArray).push(new FormControl(false)));
+      this.user.roles.forEach((role : UserRole) => {
+        const index = this.roles.findIndex(x => x === role); //rolesString
         if (index != -1)
-        {
-          (this.formGroup.get('checkboxes') as FormArray).at(index).setValue(true);
-        }
+          (this.formGroup.get('roles') as FormArray).at(index).setValue(true);
       })
       this.isLoading = false;
     });
   }
+
 
   goToPage(pageName: string){
     this.router.navigate([`${pageName}`]);
@@ -60,7 +49,6 @@ export class UserUpdateComponent implements OnInit {
 
   updateUsr():void {
     this.isLoading = true;
-    console.log(this.formGroup.value);
     if(typeof(this.formGroup.getRawValue()) != "undefined") {
       this.userService.updateUser(this.formGroup.value).subscribe({
         next: (_) => {

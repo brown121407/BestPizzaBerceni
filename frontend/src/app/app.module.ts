@@ -19,6 +19,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { IngredientsModule } from "./modules/ingredients/ingredients.module";
+import { PNFComponent } from './modules/errors/components/page-not-found/page-not-found.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');

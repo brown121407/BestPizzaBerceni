@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import {IngredientComponent} from "./modules/ingredients/components/ingredient/ingredient.component";
 import {IngredientPageComponent} from "./modules/ingredients/components/ingredient-page/ingredient-page.component";
 import {IngredientUpdateComponent} from "./modules/ingredients/components/ingredient-update/ingredient-update.component";
 import { MenuComponent } from "./components/menu/menu.component";
 import { RefreshComponent } from "./components/refresh/refresh.component";
 import { AuthGuard } from "./modules/account/guards/auth.guard";
+import { PNFComponent } from "./modules/errors/components/page-not-found/page-not-found.component";
 
 const routes: Routes = [
+  { path: '', component: MenuComponent},
   {
     path: 'account',
     loadChildren: () => import('./modules/account/account.module').then(m => m.AccountModule)
@@ -40,7 +43,17 @@ const routes: Routes = [
   {
     path: 'users',
     loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule)
-  }
+  },
+  {
+    path: 'errors',
+    loadChildren: () => import('./modules/errors/errors.module').then(m => m.ErrorsModule)
+  },
+  {
+    path: '**', pathMatch: 'full',
+    component: PNFComponent
+  },
+
+  //ba murim cu zile
 ];
 
 @NgModule({
