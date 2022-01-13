@@ -17,7 +17,10 @@ export class userComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe((res: IUser[]) => this.users = res);
+    this.userService.getUsers().subscribe((res: IUser[]) => {
+      console.log(res);
+      this.users = res
+    });
   }
 
   goToPage(pageName: string){
