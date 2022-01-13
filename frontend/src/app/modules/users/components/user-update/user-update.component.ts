@@ -37,7 +37,12 @@ export class UserUpdateComponent implements OnInit {
         lastname: [this.user?.lastName, Validators.required],
         roles: new FormArray([])
       });
-
+      this.userService.getAddresses().subscribe(res => {
+        this.addresses = res.filter((address: IAddress) =>{
+          const index = this.user.addresses.findIndex((x: number) => x == address.id);
+          return index != -1;
+        });
+      })
       this.roles.forEach((_) => (this.formGroup.get('roles') as FormArray).push(new FormControl(false)));
       this.user.roles.forEach((role : UserRole) => {
         const index = this.roles.findIndex(x => x === role); //rolesString
@@ -70,5 +75,10 @@ export class UserUpdateComponent implements OnInit {
       })
     }
   }
-
+  deleteAddress(id: number): void{
+    this.userService.deleteAddressById(id).subscribe((_) => {
+      this.toastr.success("Address deleted successfully");
+      this.addresses = this.addresses.filter((prod: IAddress) => prod.id !== id);
+    })
+  }
 }
