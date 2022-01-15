@@ -3,7 +3,6 @@ import {IProduct} from "../../../../models/product";
 import {ProductService} from "../../services/product.service";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
-import {IIngredient} from "../../../../models/ingredient";
 
 @Component({
   selector: 'app-products',
@@ -17,18 +16,17 @@ export class ProductsComponent implements OnInit {
   constructor(private productService: ProductService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe((res: IProduct[]) =>{
+    this.productService.getProducts().subscribe((res: IProduct[]) => {
       this.products = res;
+    });
   }
-  );
-  }
-  deleteProduct(productid: number){
+
+  deleteProduct(productid: number): void {
     this.productService.deleteProductById(productid).subscribe((_) =>{
       {
         this.toastr.success("Ingredient deleted successfully");
         this.products = this.products.filter((prod: IProduct) => prod.id !== productid);
       }
-    })
+    });
   }
-
 }

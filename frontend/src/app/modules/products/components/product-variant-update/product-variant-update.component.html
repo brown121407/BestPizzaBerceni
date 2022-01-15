@@ -1,7 +1,8 @@
 <div class="container">
   <mat-spinner *ngIf="isLoading else loaded"></mat-spinner>
   <ng-template #loaded>
-    <mat-card class="add-ing-body"><mat-card-title>Update Product Variant for {{variant!.name}} </mat-card-title>
+    <mat-card class="add-ing-body">
+      <mat-card-title>Update Product Variant for {{variant!.name}}</mat-card-title>
       <form [formGroup]="formGroup">
         <mat-card>
           <mat-form-field appearance="fill" color="primary">
@@ -23,12 +24,13 @@
             <mat-label>Price</mat-label>
             <input matInput type="real" formControlName="price">
           </mat-form-field>
-            <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="updateProductVariant()">Update Product Variant</button>
-            <button mat-raised-button color="primary" class="btn-add" (click)="goToPage(page)" >Go Back</button>
+            <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid"
+                    (click)="updateProductVariant()">
+              Update Product Variant
+            </button>
+            <button mat-raised-button color="primary" class="btn-add" (click)="goToPage(page)">Go Back</button>
         </mat-card>
-
       </form>
-
     </mat-card>
   </ng-template>
 </div>

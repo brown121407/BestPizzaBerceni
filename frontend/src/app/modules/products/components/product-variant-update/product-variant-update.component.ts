@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../../services/product.service";
 import {ToastrService} from "ngx-toastr";
-import {IngredientService} from "../../../ingredients/services/ingredient.service";
 import {IProductVariant, IProductVariantUpdate} from "../../../../models/product-variant";
 
 @Component({
@@ -19,8 +18,13 @@ export class ProductVariantUpdateComponent implements OnInit {
   variantId!: number;
   page: string = "";
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private productService: ProductService, private router: Router, private toastr: ToastrService, private ingredientService: IngredientService) {
-  }
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private router: Router,
+    private toastr: ToastrService,
+  ) { }
 
   ngOnInit(): void {
     this.productId = Number(this.route.snapshot.paramMap.get('idProd'));
@@ -35,7 +39,7 @@ export class ProductVariantUpdateComponent implements OnInit {
         unit: res.unit,
         price: res.price,
         product: this.productId
-      }
+      };
 
       this.formGroup = this.formBuilder.group({
         id: [this.variantId, Validators.required],
@@ -44,14 +48,15 @@ export class ProductVariantUpdateComponent implements OnInit {
         unit: [this.variant.unit, Validators.required],
         price: [this.variant.price, Validators.required],
         product: [this.productId]
-      })
+      });
       this.isLoading = false;
-    })
+    });
   }
 
   goToPage(pageName: string) {
     this.router.navigate([`${pageName}`]);
   }
+
   updateProductVariant(): void {
     this.isLoading = true;
     this.productService.updateProductVariant(this.variantId, this.formGroup.value).subscribe({

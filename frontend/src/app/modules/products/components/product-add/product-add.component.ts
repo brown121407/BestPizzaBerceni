@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ProductService} from "../../services/product.service";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {IIngredient} from "../../../../models/ingredient";
 import {IngredientService} from "../../../ingredients/services/ingredient.service";
-import {Observable, switchMap} from "rxjs";
 import { IProduct, IProductCreate } from "../../../../models/product";
 
 @Component({
@@ -22,18 +21,23 @@ export class ProductAddComponent implements OnInit {
   ingredients!: IIngredient[];
   products!: IProduct[];
 
-  constructor(private formBuilder: FormBuilder, private productService: ProductService, private router: Router, private toastr: ToastrService, private ingredientService: IngredientService) {
-  }
+  constructor(
+    private formBuilder: FormBuilder,
+    private productService: ProductService,
+    private router: Router,
+    private toastr: ToastrService,
+    private ingredientService: IngredientService
+  ) { }
 
   ngOnInit(): void {
     this.ingredientService.getIngredients().subscribe((res: IIngredient[]) => {
       this.ingredients = res;
       this.ingredients.forEach((_) => (this.formGroup.get('checkboxes') as FormArray).push(new FormControl(false)))
-    })
+    });
     this.productService.getProducts().subscribe((res: IProduct[]) => this.products = res);
   }
 
-  goToPage(pageName: string) {
+  goToPage(pageName: string): void {
     this.router.navigate([`${pageName}`]);
   }
 

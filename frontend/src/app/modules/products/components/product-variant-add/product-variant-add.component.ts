@@ -25,8 +25,14 @@ export class ProductVariantAddComponent implements OnInit {
     'price': new FormControl(0, Validators.required)
   });
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private productService: ProductService, private router: Router, private toastr: ToastrService, private ingredientService: IngredientService) {
-  }
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private router: Router,
+    private toastr: ToastrService,
+  ) { }
+
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('idProd'));
     this.isLoading = true;
@@ -34,9 +40,10 @@ export class ProductVariantAddComponent implements OnInit {
     this.productService.getProductById(this.id).subscribe( (res: IProduct) => {
       this.product = res;
       this.isLoading = false;
-    })
+    });
   }
-  goToPage(pageName: string) {
+
+  goToPage(pageName: string): void {
     this.router.navigate([`${pageName}`]);
   }
 
@@ -48,7 +55,8 @@ export class ProductVariantAddComponent implements OnInit {
       price: this.formGroup.get('price')!.value,
       unit: this.formGroup.get('unit')!.value,
       product: this.id
-    }
+    };
+
     this.productService.addProductVariant(productVariant).subscribe({
       next: (_) => {
         this.isLoading = false;
@@ -58,7 +66,6 @@ export class ProductVariantAddComponent implements OnInit {
       error: (_) => {
         this.isLoading = false;
       }
-    })
-
+    });
   }
 }
