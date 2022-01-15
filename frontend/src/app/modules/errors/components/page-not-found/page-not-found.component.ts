@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
-import {ErrorService} from "../../services/error.service";
 
 @Component({
   selector: 'app-page-not-found',
@@ -9,10 +6,7 @@ import {ErrorService} from "../../services/error.service";
   styleUrls: ['./page-not-found.component.css']
 })
 export class PNFComponent implements OnInit {
+  constructor() { }
 
-  constructor(private errorService: ErrorService, private router: Router, private route:ActivatedRoute, private toastr: ToastrService) { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void { }
 }

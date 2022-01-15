@@ -50,8 +50,6 @@ const routes: Routes = [
     path: '**', pathMatch: 'full',
     component: PNFComponent
   },
-
-  //ba murim cu zile
 ];
 
 @NgModule({

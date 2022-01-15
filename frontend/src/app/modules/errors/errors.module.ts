@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ErrorsRoutingModule } from './errors-routing.module';
 import { PNFComponent } from './components/page-not-found/page-not-found.component';
 
 
@@ -11,7 +10,6 @@ import { PNFComponent } from './components/page-not-found/page-not-found.compone
   ],
   imports: [
     CommonModule,
-    ErrorsRoutingModule
   ],
   exports: [
     PNFComponent
