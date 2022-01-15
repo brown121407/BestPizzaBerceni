@@ -1,7 +1,8 @@
-.info-button{
+.info-button {
   display: inline-block;
   float: right;
 }
+
 chip {
   padding-right: 200px;
 }
@@ -17,12 +18,13 @@ chip {
   display: table-cell;
   width: 100%;
   float: right;
-
 }
-.modify-button{
+
+.modify-button {
   float: right;
   margin-right: 20px;
 }
+
 .button-row .mat-button-base {
   margin: 0px 5px 5px 5px;
 }
@@ -49,11 +51,11 @@ input {
   width: 5rem;
 }
 
-
 .total {
   text-align: right;
   font-weight: bold;
 }
+
 mat-card-title {
   padding-right: 10px;
 }

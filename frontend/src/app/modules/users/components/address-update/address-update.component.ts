@@ -19,8 +19,14 @@ export class AddressUpdateComponent implements OnInit {
   userId!: number;
   addressId!: number;
   user!: IUser;
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private userService: UserService, private router: Router, private toastr: ToastrService) {
-  }
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private router: Router,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.userId = Number(this.route.snapshot.paramMap.get('idUser'));
@@ -36,7 +42,7 @@ export class AddressUpdateComponent implements OnInit {
           postalCode: res.postalCode,
           phoneNumber: res.phoneNumber,
           user: this.userId
-        }
+        };
 
         this.formGroup = this.formBuilder.group({
           id: [this.addressId, Validators.required],
@@ -46,14 +52,13 @@ export class AddressUpdateComponent implements OnInit {
           phoneNumber: [this.address.phoneNumber, Validators.required],
           postalCode: [this.address.postalCode, Validators.required],
           user: [this.userId]
-        })
+        });
         this.isLoading = false;
       })
     });
-
   }
 
-  goToPage(pageName: string){
+  goToPage(pageName: string): void {
     this.router.navigate([`${pageName}`]);
   }
 

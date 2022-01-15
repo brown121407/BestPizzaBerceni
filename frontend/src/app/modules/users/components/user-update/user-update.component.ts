@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {checkRoles, IUser, rolesAtLeast, UserRole} from "../../../../models/user";
-import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {IUser, UserRole} from "../../../../models/user";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {allRoles} from "../../../../models/user";
 import {IAddress} from "../../../../models/address";
-import {IProductVariant} from "../../../../models/product-variant";
-import {environment} from "../../../../../environments/environment";
-import {IProduct} from "../../../../models/product";
 
 @Component({
   selector: 'app-user-update',
@@ -22,9 +19,14 @@ export class UserUpdateComponent implements OnInit {
   roles: UserRole[] = allRoles;
   formGroup!: FormGroup;
   addresses: IAddress[] = [];
-  //rolesString: string[] = ['Admin', 'Manager', 'Store Employee', 'Delivery Employee','Loyal Customer', 'Customer'];
 
-  constructor(private userService: UserService, private router: Router, private route:ActivatedRoute, private toastr: ToastrService, private fb: FormBuilder) { }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private route:ActivatedRoute,
+    private toastr: ToastrService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -42,24 +44,24 @@ export class UserUpdateComponent implements OnInit {
           const index = this.user.addresses.findIndex((x: number) => x == address.id);
           return index != -1;
         });
-      })
+      });
       this.roles.forEach((_) => (this.formGroup.get('roles') as FormArray).push(new FormControl(false)));
       this.user.roles.forEach((role : UserRole) => {
         const index = this.roles.findIndex(x => x === role); //rolesString
         if (index != -1)
           (this.formGroup.get('roles') as FormArray).at(index).setValue(true);
-      })
+      });
       this.isLoading = false;
     });
   }
 
-  goToPage(pageName: string){
+  goToPage(pageName: string): void {
     this.router.navigate([`${pageName}`]);
   }
 
-  updateUsr():void {
+  updateUsr(): void {
     this.isLoading = true;
-    if(typeof(this.formGroup.getRawValue()) != "undefined") {
+    if (this.formGroup.value) {
       const arrayControl = this.formGroup.get('roles') as FormArray;
       const roles1 = this.roles.filter((role: string, index: number) => arrayControl.at(index).value);
       this.user.lastName = this.formGroup.get('lastname')!.value;
@@ -72,13 +74,14 @@ export class UserUpdateComponent implements OnInit {
           this.goToPage(`/users/list`)
         },
         error: (err: any) => this.toastr.error(JSON.stringify(err))
-      })
+      });
     }
   }
-  deleteAddress(id: number): void{
+
+  deleteAddress(id: number): void {
     this.userService.deleteAddressById(id).subscribe((_) => {
       this.toastr.success("Address deleted successfully");
       this.addresses = this.addresses.filter((prod: IAddress) => prod.id !== id);
-    })
+    });
   }
 }

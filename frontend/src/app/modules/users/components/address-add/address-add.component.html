@@ -3,37 +3,36 @@
   <ng-template #loaded>
     <mat-card class="add-ing-body"><mat-card-title>Add Address for {{user!.lastName + ' ' + user!.firstName}} </mat-card-title>
       <form [formGroup]="formGroup">
-          <mat-form-field appearance="fill" color="primary">
-            <mat-label>County</mat-label>
-            <input matInput type="text" formControlName="county">
-          </mat-form-field>
-          <br>
-          <mat-form-field appearance="fill" color="primary">
-            <mat-label>City</mat-label>
-            <input matInput type="text" formControlName="city">
-          </mat-form-field>
-          <br>
-          <mat-form-field appearance="fill" color="primary">
-            <mat-label>Address Line</mat-label>
-            <input matInput type="text" formControlName="addressLine">
-          </mat-form-field>
-          <br>
-          <mat-form-field appearance="fill" color="primary">
-            <mat-label>Postal Code</mat-label>
-            <input matInput type="text" formControlName="postalCode">
-          </mat-form-field>
-          <br>
-          <mat-form-field appearance="fill" color="primary">
-            <mat-label>Phone Number</mat-label>
-            <input matInput type="text" formControlName="phoneNumber">
-          </mat-form-field>
-          <br>
+        <mat-form-field appearance="fill" color="primary">
+          <mat-label>County</mat-label>
+          <input matInput type="text" formControlName="county">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill" color="primary">
+          <mat-label>City</mat-label>
+          <input matInput type="text" formControlName="city">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill" color="primary">
+          <mat-label>Address Line</mat-label>
+          <input matInput type="text" formControlName="addressLine">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill" color="primary">
+          <mat-label>Postal Code</mat-label>
+          <input matInput type="text" formControlName="postalCode">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill" color="primary">
+          <mat-label>Phone Number</mat-label>
+          <input matInput type="text" formControlName="phoneNumber">
+        </mat-form-field>
+        <br>
         <div class="buttons">
           <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="addAddress()">Add Address</button>
           <button mat-raised-button color="primary" class="btn-add" (click)="goToPage(page)" >Go Back</button>
         </div>
       </form>
-
     </mat-card>
   </ng-template>
 </div>

@@ -25,8 +25,12 @@ export class AddressAddComponent implements OnInit {
   id!: number;
   page: string = "";
 
-  constructor(private userService: UserService, private router: Router, private route:ActivatedRoute, private toastr: ToastrService, private fb: FormBuilder) {
-  }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private route:ActivatedRoute,
+    private toastr: ToastrService,
+  ) { }
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('idUser'));
@@ -35,13 +39,14 @@ export class AddressAddComponent implements OnInit {
     this.userService.getUser(this.id).subscribe( (res: IUser) => {
       this.user = res;
       this.isLoading = false;
-    })
+    });
   }
 
-  goToPage(pageName: string) {
+  goToPage(pageName: string): void {
     this.router.navigate([`${pageName}`]);
   }
-  addAddress(): void{
+
+  addAddress(): void {
     this.isLoading = true;
     const address = {
       county: this.formGroup.get('county')!.value,
@@ -50,7 +55,8 @@ export class AddressAddComponent implements OnInit {
       addressLine: this.formGroup.get('addressLine')!.value,
       phoneNumber: this.formGroup.get('phoneNumber')!.value,
       user: this.id
-    }
+    };
+
     this.userService.addAddress(address).subscribe({
       next: (_) => {
         this.isLoading = false;
@@ -60,6 +66,6 @@ export class AddressAddComponent implements OnInit {
       error: (_) => {
         this.isLoading = false;
       }
-    })
+    });
   }
 }
