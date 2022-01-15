@@ -54,13 +54,17 @@ namespace BestPizzaBerceni.Repositories.UserRepository
 
         public async Task<User> GetByEmailWithRolesAsync(string email)
         {
-            return await DbContext.Users.Include(u => u.Roles)
+            return await DbContext.Users
+                .Include(u => u.Roles)
+                .Include(u => u.Addresses)
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<User> GetByIdWithRolesAsync(int id)
         {
-            return await DbContext.Users.Include(u => u.Roles)
+            return await DbContext.Users
+                .Include(u => u.Roles)
+                .Include(u => u.Addresses)
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
     }

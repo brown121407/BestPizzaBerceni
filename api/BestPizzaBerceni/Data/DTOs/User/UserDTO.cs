@@ -10,5 +10,6 @@ namespace BestPizzaBerceni.Data.DTOs.User
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public List<string> Roles { get; set; }
+        public List<int> Addresses { get; set; }
     }
 }

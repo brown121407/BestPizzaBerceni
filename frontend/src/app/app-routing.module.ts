@@ -6,6 +6,7 @@ import {IngredientUpdateComponent} from "./modules/ingredients/components/ingred
 import { MenuComponent } from "./components/menu/menu.component";
 import { RefreshComponent } from "./components/refresh/refresh.component";
 import { AuthGuard } from "./modules/account/guards/auth.guard";
+import { PNFComponent } from "./modules/errors/components/page-not-found/page-not-found.component";
 
 const routes: Routes = [
   {
@@ -40,7 +41,17 @@ const routes: Routes = [
   {
     path: 'users',
     loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule)
-  }
+  },
+  {
+    path: 'errors',
+    loadChildren: () => import('./modules/errors/errors.module').then(m => m.ErrorsModule)
+  },
+  {
+    path: '**', pathMatch: 'full',
+    component: PNFComponent
+  },
+
+  //ba murim cu zile
 ];
 
 @NgModule({

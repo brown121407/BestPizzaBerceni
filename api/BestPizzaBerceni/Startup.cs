@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -105,6 +106,7 @@ namespace BestPizzaBerceni
             services.AddScoped<ICouponRepository, CouponRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

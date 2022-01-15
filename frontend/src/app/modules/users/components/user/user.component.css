@@ -1,13 +1,18 @@
+.info-button{
+  display: inline-block;
+  float: right;
+}
+chip {
+  padding-right: 200px;
+}
+
 #cart-actions {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 1rem;
 }
-.info-button{
-  display:      inline-block;
-  float: right;
-}
+
 .button-row {
   display: table-cell;
   width: 100%;
@@ -49,3 +54,8 @@ input {
   text-align: right;
   font-weight: bold;
 }
+mat-card-title {
+  padding-right: 10px;
+}
+
+
