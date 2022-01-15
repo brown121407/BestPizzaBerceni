@@ -15,11 +15,11 @@ export class IngredientPageComponent implements OnInit {
     'spicy': new FormControl(false),
     'allergen': new FormControl(false)
   });
+  isLoading = false;
 
   constructor(private ingredientService: IngredientService, private router: Router, private toastr: ToastrService ) { }
-  isLoading = false;
-  ngOnInit(): void {
-  }
+
+  ngOnInit(): void { }
 
   goToPage(pageName: string){
     this.router.navigate([`${pageName}`]);
@@ -27,16 +27,16 @@ export class IngredientPageComponent implements OnInit {
 
   addIngred(): void{
     this.isLoading = true;
-    this.ingredientService.addIngredient(this.formGroup.value).subscribe({
-      next: (_) => {
-        this.isLoading = false;
-        this.toastr.success("Ingredient added successfully");
-        this.goToPage(`/ingredients/list`);
-      },
-      error: (_) => {
-      this.isLoading = false;
-    }
-    });
+    this.ingredientService.addIngredient(this.formGroup.value)
+      .subscribe({
+        next: (_) => {
+          this.isLoading = false;
+          this.toastr.success("Ingredient added successfully");
+          this.goToPage(`/ingredients/list`);
+        },
+        error: (_) => {
+          this.isLoading = false;
+        }
+      });
   }
-
 }

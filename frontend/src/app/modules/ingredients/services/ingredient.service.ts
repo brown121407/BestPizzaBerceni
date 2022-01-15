@@ -8,7 +8,6 @@ import { IIngredient } from "../../../models/ingredient";
   providedIn: 'root'
 })
 export class IngredientService {
-  private url: string = environment.apiUrl;
   constructor(private httpClient: HttpClient) { }
 
   getIngredients(): Observable<IIngredient[]>{
@@ -18,12 +17,15 @@ export class IngredientService {
   addIngredient(ingredient :IIngredient){
     return this.httpClient.post(`${environment.apiUrl}/ingredients`, ingredient);
   }
+
   getIngredient(ingredientId : number): Observable<IIngredient>{
     return this.httpClient.get<IIngredient>(`${environment.apiUrl}/ingredients/` + ingredientId.toString())
   }
+
   deleteIngredient(ingredientId : number): Observable<any>{
     return this.httpClient.delete(`${environment.apiUrl}/ingredients/` + ingredientId.toString())
   }
+
   updateIngredient(ingredient: IIngredient): Observable<any> {
     return this.httpClient.put(`${environment.apiUrl}/ingredients/` + ingredient.id.toString(), ingredient);
   }
