@@ -1,1 +1,15 @@
-<p>order-list works!</p>
+<h1>Orders</h1>
+
+<div *ngIf="!isLoading">
+  <p *ngIf="!orders.length">No orders have been made.</p>
+
+  <ul>
+    <li *ngFor="let order of orders">
+      <mat-card>
+
+      </mat-card>
+    </li>
+  </ul>
+</div>
+
+<mat-spinner *ngIf="isLoading"></mat-spinner>

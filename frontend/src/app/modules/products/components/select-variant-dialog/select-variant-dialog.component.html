@@ -1,0 +1,14 @@
+<h1>Add {{ product.name }} to cart</h1>
+
+<mat-radio-group>
+  <div *ngFor="let variant of product.productVariants!">
+    <mat-radio-button>{{ variant.name }}</mat-radio-button>
+  </div>
+</mat-radio-group>
+
+<div class="actions">
+  <button mat-raised-button color="warn">Cancel</button>
+  <span class="spacer"></span>
+  <button mat-raised-button color="accent">Add</button>
+</div>
+

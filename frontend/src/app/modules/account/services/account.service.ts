@@ -22,8 +22,26 @@ export class AccountService {
     this.currentUser$ = this.currentUserSubject.asObservable();
   }
 
-  checkRoles(expectedRole: UserRole): boolean {
-    return checkRoles(this.currentUser!, expectedRole);
+  /**
+   * Check if the current user has a role compatible with `expectedRole`.
+   * @param expectedRole
+   */
+  checkRole(expectedRole: UserRole): boolean {
+    return checkRoles(this.currentUser, expectedRole);
+  }
+
+  /**
+   * Check if the current user has a role compatible with any of the `expectedRoles`.
+   * @param expectedRoles
+   */
+  checkRoles(expectedRoles: UserRole[]): boolean {
+    for (let role of expectedRoles) {
+      if (checkRoles(this.currentUser, role)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   signUp(user: IUserSignup): Observable<any> {

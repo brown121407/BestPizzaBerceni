@@ -41,6 +41,6 @@ export class CouponsListComponent implements OnInit {
   }
 
   isAtLeastManager(): boolean {
-    return this.accountService.checkRoles(UserRole.Manager);
+    return this.accountService.checkRole(UserRole.Manager);
   }
 }

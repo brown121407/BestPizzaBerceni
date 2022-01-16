@@ -59,7 +59,10 @@ export function rolesAtLeast(role: UserRole): UserRole[] {
   }
 }
 
-export function checkRoles(user: IUser, expectedRole: UserRole): boolean {
+export function checkRoles(user: IUser | null, expectedRole: UserRole): boolean {
+  if (!user) {
+    return false;
+  }
   const allowedRoles = rolesAtLeast(expectedRole);
   return allowedRoles.some((r: UserRole) => user.roles.includes(r));
 }

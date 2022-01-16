@@ -10,6 +10,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { OrderComponent } from './components/order/order.component';
 import { OrderRoutingModule } from "./order-routing.module";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -17,16 +18,17 @@ import { OrderRoutingModule } from "./order-routing.module";
     OrderListComponent,
     OrderComponent
   ],
-  imports: [
-    CommonModule,
-    OrderRoutingModule,
-    MatFormFieldModule,
-    MatCardModule,
-    FormsModule,
-    MatChipsModule,
-    MatInputModule,
-    MatButtonModule
-  ],
+    imports: [
+        CommonModule,
+        OrderRoutingModule,
+        MatFormFieldModule,
+        MatCardModule,
+        FormsModule,
+        MatChipsModule,
+        MatInputModule,
+        MatButtonModule,
+        MatProgressSpinnerModule
+    ],
   exports: [
     CartComponent,
     OrderListComponent

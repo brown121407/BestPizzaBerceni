@@ -15,6 +15,8 @@ import { ProductUpdateComponent } from './components/product-update/product-upda
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { ProductVariantAddComponent } from './components/product-variant-add/product-variant-add.component';
 import { ProductVariantUpdateComponent } from './components/product-variant-update/product-variant-update.component';
+import { SelectVariantDialogComponent } from './components/select-variant-dialog/select-variant-dialog.component';
+import { MatRadioModule } from "@angular/material/radio";
 
 
 @NgModule({
@@ -23,19 +25,21 @@ import { ProductVariantUpdateComponent } from './components/product-variant-upda
     ProductAddComponent,
     ProductUpdateComponent,
     ProductVariantAddComponent,
-    ProductVariantUpdateComponent
+    ProductVariantUpdateComponent,
+    SelectVariantDialogComponent
   ],
-  imports: [
-    CommonModule,
-    ProductsRoutingModule,
-    MatCardModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatChipsModule,
-    MatProgressSpinnerModule
-  ]
+    imports: [
+        CommonModule,
+        ProductsRoutingModule,
+        MatCardModule,
+        MatButtonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatChipsModule,
+        MatProgressSpinnerModule,
+        MatRadioModule
+    ]
 })
 export class ProductsModule { }

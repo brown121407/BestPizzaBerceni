@@ -14,10 +14,15 @@ chip {
   gap: 1rem;
 }
 
+dt {
+  font-weight: bold;
+}
+
 .button-row {
-  display: table-cell;
-  width: 100%;
-  float: right;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  gap: 1rem;
 }
 
 .modify-button {

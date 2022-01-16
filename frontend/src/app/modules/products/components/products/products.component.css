@@ -14,10 +14,11 @@
   display: inline-block;
 }
 
-.button-row {
-  display: table-cell;
-  width: 100%;
-  float: right;
+mat-card-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .modify-button {

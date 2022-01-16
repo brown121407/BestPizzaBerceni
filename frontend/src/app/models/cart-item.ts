@@ -8,3 +8,12 @@ export interface ICartItem {
   productVariant?: IProductVariant;
   user?: IUser;
 }
+
+export interface ICartItemUpdate {
+  quantity: number;
+
+  productVariant: number;
+  user: number;
+}
+
+export interface ICartItemCreate extends ICartItemUpdate { }
