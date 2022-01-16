@@ -22,12 +22,14 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.accountService.currentUser$.subscribe((user: IUser | null) => {
+      console.log(user);
       this.formGroup = this.fb.group({
         firstName: [user?.firstName, Validators.required],
         lastName: [user?.lastName, Validators.required],
         email: [user?.email, Validators.required],
         id: [user?.id, Validators.required],
-        roles: this.fb.array([user?.roles], Validators.required),
+        roles: this.fb.array(user!.roles, Validators.required),
+        addresses: this.fb.array(user!.addresses),
         token: user?.token
       });
 

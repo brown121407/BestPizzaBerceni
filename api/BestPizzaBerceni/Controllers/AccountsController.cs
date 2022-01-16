@@ -75,7 +75,8 @@ namespace BestPizzaBerceni.Controllers
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Roles = user.Roles.Select(x => x.Name).ToList()
+                Roles = user.Roles.Select(x => x.Name).ToList(),
+                Addresses = user.Addresses.Select(x => x.Id).ToList()
             };
         }
     }
