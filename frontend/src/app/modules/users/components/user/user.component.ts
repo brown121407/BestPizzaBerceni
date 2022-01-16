@@ -22,7 +22,7 @@ export class userComponent implements OnInit {
     this.router.navigate([`${pageName}`]);
   }
 
-  dltUser(id: string): void {
+  dltUser(id: number): void {
     this.userService.deleteUser(id).subscribe((_) =>
       {
         this.toastr.success("User deleted successfully");

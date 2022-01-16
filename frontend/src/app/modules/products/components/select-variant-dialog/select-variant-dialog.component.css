@@ -7,3 +7,12 @@
 .spacer {
   flex-grow: 99;
 }
+
+table {
+  min-width: 100%;
+  margin-bottom: 1rem;
+}
+
+td {
+  text-align: center;
+}

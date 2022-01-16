@@ -15,13 +15,6 @@ namespace BestPizzaBerceni.Repositories.CouponRepository
         {
         }
 
-        public override List<Coupon> GetAll()
-        {
-            return DbContext.Coupons
-                .Include(c => c.User)
-                .ToList();
-        }
-
         public override async Task<List<Coupon>> GetAllAsync()
         {
             return await DbContext.Coupons
@@ -29,13 +22,6 @@ namespace BestPizzaBerceni.Repositories.CouponRepository
                 .ToListAsync();
         }
 
-        public override Coupon? GetById(int id)
-        {
-            return DbContext.Coupons
-                .Include(c => c.User)
-                .FirstOrDefault(c => c.Id == id);
-        }
-        
         public override async Task<Coupon?> GetByIdAsync(int id)
         {
             return await DbContext.Coupons

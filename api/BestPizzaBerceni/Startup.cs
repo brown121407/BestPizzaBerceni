@@ -8,6 +8,7 @@ using BestPizzaBerceni.Data;
 using BestPizzaBerceni.Data.Models;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.CartItemRepository;
 using BestPizzaBerceni.Repositories.CouponRepository;
 using BestPizzaBerceni.Repositories.ProductRepository;
 using BestPizzaBerceni.Repositories.RoleRepository;
@@ -107,6 +108,7 @@ namespace BestPizzaBerceni
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<ICartItemRepository, CartItemRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

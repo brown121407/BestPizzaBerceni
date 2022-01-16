@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { ICartItem, ICartItemCreate } from "../../../models/cart-item";
+import { ICartItem, ICartItemCreate, ICartItemUpdate } from "../../../models/cart-item";
 import { environment } from "../../../../environments/environment";
-import { IOrderItem } from "../../../models/order-item";
 import { IOrder } from "../../../models/order";
 
 @Injectable({
@@ -18,6 +17,10 @@ export class OrderService {
 
   addCartItem(cartItem: ICartItemCreate): Observable<ICartItem> {
     return this.httpClient.post<ICartItem>(`${environment.apiUrl}/cartItems`, cartItem);
+  }
+
+  updateCartItem(id: number, cartItem: ICartItemUpdate): Observable<any> {
+    return this.httpClient.put<ICartItem>(`${environment.apiUrl}/cartItems/${id}`, cartItem);
   }
 
   removeCartItem(id: number): Observable<any> {

@@ -15,15 +15,15 @@ export class UserService {
     return this.httpClient.get<IUser[]>(`${environment.apiUrl}/users`, { withCredentials: true });
   }
 
-  addUser(user :IUser) {
+  addUser(user: IUser) {
     return this.httpClient.post(`${environment.apiUrl}/users`, user);
   }
 
-  getUser(userId : number): Observable<IUser> {
+  getUser(userId: number): Observable<IUser> {
     return this.httpClient.get<IUser>(`${environment.apiUrl}/users/` + userId.toString())
   }
 
-  deleteUser(userId : string): Observable<any> {
+  deleteUser(userId: number): Observable<any> {
     return this.httpClient.delete(`${environment.apiUrl}/users/` + userId.toString())
   }
 

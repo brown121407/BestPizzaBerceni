@@ -37,12 +37,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/coupons/coupons.module').then(m => m.CouponsModule),
     canActivate: [AuthGuard]
   },
-  { path: 'products',
-    loadChildren: () => import('./modules/products/products.module').then(m => m.ProductsModule)
-  },
   {
     path: 'users',
-    loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule)
+    loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'errors',

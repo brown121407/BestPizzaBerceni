@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ICartItem } from "../../../../models/cart-item";
+import { ICartItem, ICartItemUpdate } from "../../../../models/cart-item";
+import { OrderService } from "../../services/order.service";
+import { AccountService } from "../../../account/services/account.service";
+import { forkJoin } from "rxjs";
 
 @Component({
   selector: 'app-cart',
@@ -7,83 +10,62 @@ import { ICartItem } from "../../../../models/cart-item";
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  // TODO Remove this when we can add items to the cart from the menu.
-  cartItems: ICartItem[] = [
-    {
-      id: 1,
-      quantity: 2,
-      productVariant: {
-        id: 1,
-        name: 'Mare',
-        quantity: 500,
-        unit: 'g',
-        price: 35,
-        product: {
-          id: 1,
-          name: 'Pizza Margherita',
-          ingredients: [
-            {
-              id: 1,
-              name: 'Blat',
-              allergen: false,
-              spicy: false
-            }
-          ]
-        }
-      }
-    },
-    {
-      id: 1,
-      quantity: 2,
-      productVariant: {
-        id: 1,
-        name: 'Medie',
-        quantity: 400,
-        unit: 'g',
-        price: 26,
-        product: {
-          id: 2,
-          name: 'Pizza Casei',
-          ingredients: [
-            {
-              id: 1,
-              name: 'Blat',
-              allergen: false,
-              spicy: false
-            },
-            {
-              id: 2,
-              name: 'Ciuperci',
-              allergen: false,
-              spicy: false
-            }
-          ]
-        }
-      }
-    }
-  ];
+  cartItems: ICartItem[] = [];
+  isLoading: boolean = false;
   hasChanged: boolean = false;
 
-  constructor() { }
+  constructor(private orderService: OrderService, private accountService: AccountService) { }
+
+  ngOnInit(): void {
+    this.isLoading = true;
+    this.orderService.getCartItemsOfUser(this.accountService.currentUser!.id)
+      .subscribe((cartItems: ICartItem[]) => {
+        this.cartItems = cartItems;
+        this.isLoading = false;
+      });
+  }
 
   getTotal(): number {
     return this.cartItems.reduce((acc, x) => acc + x!.quantity * x!.productVariant!.price, 0);
   }
-
-  ngOnInit(): void { }
 
   modifyCartItem(): void {
     this.hasChanged = true;
   }
 
   emptyCart(): void {
-    this.cartItems = [];
-    this.hasChanged = true;
+    this.isLoading = true;
+    const observables = this.cartItems.map((x: ICartItem) => {
+      return this.orderService.removeCartItem(x.id);
+    });
+
+    forkJoin(observables).subscribe((_) => {
+      this.isLoading = false;
+      this.cartItems = [];
+    });
   }
 
   updateCart(): void {
-    // TODO send the current cart items to the backend.
-    this.hasChanged = false;
+    this.isLoading = true;
+    const observables = this.cartItems.map((x: ICartItem) => {
+      if (x.quantity === 0) {
+        return this.orderService.removeCartItem(x.id);
+      }
+
+      const cartItem: ICartItemUpdate = {
+        quantity: x.quantity,
+        user: x.user!.id,
+        productVariant: x.productVariant!.id!
+      };
+
+      return this.orderService.updateCartItem(x.id, cartItem);
+    });
+
+    forkJoin(observables).subscribe((_) => {
+      this.isLoading = false;
+      this.hasChanged = false;
+      this.cartItems = this.cartItems.filter((x) => x.quantity > 0);
+    });
   }
 
   order(): void {
