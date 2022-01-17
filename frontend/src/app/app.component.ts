@@ -16,12 +16,18 @@ export class AppComponent implements OnInit {
 
   title = 'BestPizzaBerceni';
   isLoggedIn: boolean = false;
+  userId: number | null = null;
 
   constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit() {
     this.accountService.currentUser$
-      .subscribe((user: IUser | null) => { this.isLoggedIn = !!user; });
+      .subscribe((user: IUser | null) => {
+        this.isLoggedIn = !!user;
+        if (user) {
+          this.userId = user.id;
+        }
+      });
   }
 
   logOut() {

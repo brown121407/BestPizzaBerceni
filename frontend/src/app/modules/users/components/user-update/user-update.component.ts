@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {IUser, UserRole} from "../../../../models/user";
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../services/user.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
-import {allRoles} from "../../../../models/user";
-import {IAddress} from "../../../../models/address";
+import { allRoles, IUser, UserRole } from "../../../../models/user";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { UserService } from "../../services/user.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
+import { IAddress } from "../../../../models/address";
+import { AccountService } from "../../../account/services/account.service";
+import { switchMap } from "rxjs";
 
 @Component({
   selector: 'app-user-update',
@@ -23,13 +24,20 @@ export class UserUpdateComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private route:ActivatedRoute,
+    private route: ActivatedRoute,
     private toastr: ToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.id = Number(this.route.snapshot.paramMap.get('idUser'));
+    if (!this.accountService.checkRole(UserRole.Admin) && this.id !== this.accountService.currentUser!.id) {
+      this.toastr.error('You don\'t have the permissions to edit this user.');
+      this.router.navigate(['']);
+      return;
+    }
+
     this.isLoading = true;
     this.userService.getUser(this.id).subscribe((user: IUser) => {
       this.user = user;
@@ -37,6 +45,7 @@ export class UserUpdateComponent implements OnInit {
         id: [this.user?.id, Validators.required],
         firstname: [this.user?.firstName, Validators.required],
         lastname: [this.user?.lastName, Validators.required],
+        email: [this.user?.email, Validators.required],
         roles: new FormArray([])
       });
       this.userService.getAddresses().subscribe(res => {
@@ -67,13 +76,15 @@ export class UserUpdateComponent implements OnInit {
       this.user.lastName = this.formGroup.get('lastname')!.value;
       this.user.firstName = this.formGroup.get('firstname')!.value;
       this.user.roles = roles1;
-      this.userService.updateUser(this.user).subscribe({
-        next: (_) => {
-          this.isLoading = false;
-          this.toastr.success('Successfully updated user!');
-          this.goToPage(`/users/list`)
-        },
-        error: (err: any) => this.toastr.error(JSON.stringify(err))
+      this.user.email = this.formGroup.get('email')!.value;
+      this.userService.updateUser(this.user)
+        .pipe(switchMap((_) => this.accountService.refreshCurrentUser()))
+        .subscribe({
+          next: (_) => {
+            this.isLoading = false;
+            this.toastr.success('Successfully updated user!');
+          },
+          error: (err: any) => this.toastr.error(JSON.stringify(err))
       });
     }
   }
@@ -83,5 +94,9 @@ export class UserUpdateComponent implements OnInit {
       this.toastr.success("Address deleted successfully");
       this.addresses = this.addresses.filter((prod: IAddress) => prod.id !== id);
     });
+  }
+
+  isAdmin(): boolean {
+    return this.accountService.checkRole(UserRole.Admin);
   }
 }

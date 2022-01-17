@@ -53,16 +53,7 @@ export class AccountService {
       .pipe(
         switchMap((token: string) => {
           localStorage.setItem('token', token);
-          return this.me();
-        }),
-        map((me: Partial<IUser>) => {
-          const user = {
-            token: localStorage.getItem('token')!,
-            ...me
-          } as IUser;
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-          return user;
+          return this.refreshCurrentUser();
         })
       );
   }
@@ -71,6 +62,17 @@ export class AccountService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.currentUserSubject.next(null);
+  }
+
+  refreshCurrentUser(): Observable<any> {
+    return this.me().pipe(tap((me: Partial<IUser>) => {
+      const user = {
+        token: localStorage.getItem('token')!,
+        ...me
+      } as IUser;
+      localStorage.setItem('user', JSON.stringify(user));
+      this.currentUserSubject.next(user);
+    }));
   }
 
   me(): Observable<Partial<IUser>> {

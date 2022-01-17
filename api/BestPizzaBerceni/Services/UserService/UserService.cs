@@ -10,6 +10,7 @@ using BestPizzaBerceni.Data.DTOs;
 using BestPizzaBerceni.Data.DTOs.User;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.RoleRepository;
 using BestPizzaBerceni.Repositories.UserRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -23,23 +24,32 @@ namespace BestPizzaBerceni.Services.UserService
         private readonly UserManager<User> _userManager;
         private readonly IUserRepository _userRepository;
         private readonly IRepository<Token, string> _tokenRepository;
+        private readonly IRoleRepository _roleRepository;
 
-        public UserService(IConfiguration configuration, UserManager<User> userManager, IUserRepository userRepository, IRepository<Token, string> tokenRepository)
+        public UserService(IConfiguration configuration, UserManager<User> userManager, IUserRepository userRepository, IRepository<Token, string> tokenRepository, IRoleRepository roleRepository)
         {
             _configuration = configuration;
             _userManager = userManager;
             _userRepository = userRepository;
             _tokenRepository = tokenRepository;
+            _roleRepository = roleRepository;
         }
         
         public async Task<IdentityResult> RegisterUserAsync(RegisterUserDTO dto)
         {
+            var customerRole = await _roleRepository.GetByNameAsync("Customer");
+            if (customerRole is null)
+            {
+                throw new Exception("Customer role not found.");
+            }
+            
             var user = new User
             {
                 Email = dto.Email,
                 UserName = dto.Email,
                 FirstName = dto.FirstName,
-                LastName = dto.LastName
+                LastName = dto.LastName,
+                Roles = new List<Role> { customerRole }
             };
 
             return await _userManager.CreateAsync(user, dto.Password);

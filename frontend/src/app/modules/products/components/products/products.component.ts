@@ -51,6 +51,6 @@ export class ProductsComponent implements OnInit {
   }
 
   userCanOrder(): boolean {
-    return this.accountService.checkRole(UserRole.Manager)
+    return this.accountService.checkRole(UserRole.Customer)
   }
 }

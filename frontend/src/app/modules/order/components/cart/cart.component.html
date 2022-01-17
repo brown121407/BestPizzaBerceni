@@ -45,13 +45,35 @@
     Your cart is empty.
   </p>
 
+  <mat-radio-group [(ngModel)]="selectedAddressId">
+    <h2>Select an address:</h2>
+    <ul style="padding: 0">
+      <li *ngFor="let address of addresses">
+        <mat-card>
+          <div>
+            <mat-radio-button [value]="address.id"></mat-radio-button>
+          </div>
+          <div>
+            <h2>{{address.addressLine}}</h2>
+            <h3>{{address.county}}, {{address.city}}</h3>
+            <h3>Postal Code: {{address.postalCode}}</h3>
+            <h3>Phone: {{address.phoneNumber}}</h3>
+          </div>
+        </mat-card>
+      </li>
+    </ul>
+    <p *ngIf="addresses.length <= 0" style="color: red">
+      You don't have any addresses.
+    </p>
+  </mat-radio-group>
+
   <div id="cart-actions">
     <button mat-raised-button [disabled]="cartItems.length <= 0" (click)="emptyCart()">Empty Cart</button>
     <span class="spacer"></span>
     <button [disabled]="!hasChanged" (click)="updateCart()" mat-raised-button>
       Update
     </button>
-    <button [disabled]="hasChanged || cartItems.length <= 0" mat-raised-button color="primary" (click)="order()">
+    <button [disabled]="hasChanged || cartItems.length <= 0 || !selectedAddressId" mat-raised-button color="primary" (click)="order()">
       Order
     </button>
   </div>

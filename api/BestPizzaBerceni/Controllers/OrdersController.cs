@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BestPizzaBerceni.Data;
+using BestPizzaBerceni.Data.DTOs.Order;
 using BestPizzaBerceni.Data.Models;
 using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.OrderRepository;
 
 namespace BestPizzaBerceni.Controllers
 {
@@ -15,21 +17,23 @@ namespace BestPizzaBerceni.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly IRepository<Order, int> _orderRepository;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IRepository<Address, int> _addressRepository;
+        private readonly IRepository<OrderItem, int> _orderItemRepository;
 
-        public OrdersController(IRepository<Order, int> orderRepository)
+        public OrdersController(IOrderRepository orderRepository, IRepository<Address, int> addressRepository, IRepository<OrderItem, int> orderItemRepository)
         {
             _orderRepository = orderRepository;
+            _addressRepository = addressRepository;
+            _orderItemRepository = orderItemRepository;
         }
 
-        // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
             return await _orderRepository.GetAllAsync();
         }
 
-        // GET: api/Orders/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
@@ -43,33 +47,58 @@ namespace BestPizzaBerceni.Controllers
             return order;
         }
 
-        // PUT: api/Orders/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        public async Task<ActionResult<Order>> PutOrder(int id, OrderUpdateDTO dto)
         {
-            if (id != order.Id)
+            var order = await _orderRepository.GetByIdAsync(id);
+            if (order is null)
             {
-                return BadRequest();
+                return NotFound();
+            }
+
+            var address = await _addressRepository.GetByIdAsync(dto.Address);
+            if (address is null)
+            {
+                return NotFound();
+            }
+
+            order.Address = address;
+            
+            dto.OrderItems.Clear();
+            foreach (var orderItemId in dto.OrderItems)
+            {
+                var orderItem = await _orderItemRepository.GetByIdAsync(orderItemId);
+                if (orderItem is null)
+                {
+                    return NotFound();
+                }
+                order.OrderItems.Add(orderItem);
             }
 
             await _orderRepository.UpdateAsync(order);
 
-            return NoContent();
+            return Ok(address);
         }
 
-        // POST: api/Orders
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder(OrderCreateDTO dto)
         {
-
+            var address = await _addressRepository.GetByIdAsync(dto.Address);
+            if (address is null)
+            {
+                return NotFound();
+            }
+            
+            var order = new Order
+            {
+                Address = address
+            };
+            
             await _orderRepository.CreateAsync(order);
 
             return CreatedAtAction("GetOrder", new { id = order.Id }, order);
         }
 
-        // DELETE: api/Orders/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
         {

@@ -100,7 +100,7 @@ namespace BestPizzaBerceni.Controllers
                 Ingredients = ingredients,
                 ProductVariants = variants
             };
-            await _productsRepository.CreateAsync(product);
+            await _productsRepository.UpdateAsync(product);
 
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }

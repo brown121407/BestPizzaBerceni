@@ -1,6 +1,6 @@
 <h1>Select variant of {{ product.name }}</h1>
 
-<div>
+<div *ngIf="product.productVariants!.length > 0">
   <mat-radio-group [(ngModel)]="selectedIndex">
     <table>
       <thead>
@@ -28,3 +28,5 @@
     <button mat-raised-button color="accent" (click)="addToCart()">Add</button>
   </div>
 </div>
+
+<p *ngIf="!product.productVariants!.length">No product variants found. Please contact site administrators.</p>

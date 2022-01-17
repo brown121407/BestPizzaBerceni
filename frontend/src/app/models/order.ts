@@ -9,3 +9,7 @@ export interface IOrder {
   orderStatusUpdates?: IOrderStatusUpdate[];
   orderItems?: IOrderItem[];
 }
+
+export interface IOrderCreate {
+  address: number;
+}

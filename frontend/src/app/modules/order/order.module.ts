@@ -11,6 +11,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { OrderComponent } from './components/order/order.component';
 import { OrderRoutingModule } from "./order-routing.module";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatRadioModule } from "@angular/material/radio";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
         MatChipsModule,
         MatInputModule,
         MatButtonModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatRadioModule
     ],
   exports: [
     CartComponent,

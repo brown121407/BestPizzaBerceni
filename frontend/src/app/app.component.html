@@ -12,10 +12,10 @@
       <li><a routerLink="/ingredients/list" mat-raised-button color="primary">Ingredients</a></li>
       <li><a routerLink="/orders/list" mat-raised-button color="primary">Orders</a></li>
       <li><a routerLink="/users/list" mat-raised-button color="primary">Users</a></li>
-      <li><a routerLink="/coupons/list" mat-raised-button color="primary">Coupons</a></li>
+<!--      <li><a routerLink="/coupons/list" mat-raised-button color="primary">Coupons</a></li>-->
       <ng-container *ngIf="isLoggedIn else notLoggedIn">
         <li><a routerLink="/orders/cart" mat-raised-button color="accent"><mat-icon>shopping_cart</mat-icon></a></li>
-        <li><a routerLink="/account/profile" mat-raised-button color="primary">Account</a></li>
+        <li><a routerLink="/users/{{ userId! }}" mat-raised-button color="primary">Account</a></li>
         <li><button mat-raised-button (click)="logOut()">Log Out</button></li>
       </ng-container>
       <ng-template #notLoggedIn>

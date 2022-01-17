@@ -4,7 +4,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {IAddress, IAddressUpdate} from "../../../../models/address";
 import {UserService} from "../../services/user.service";
-import {IUser} from "../../../../models/user";
+import { IUser, UserRole } from "../../../../models/user";
+import { AccountService } from "../../../account/services/account.service";
+import { switchMap } from "rxjs";
 
 @Component({
   selector: 'app-address-update',
@@ -25,11 +27,17 @@ export class AddressUpdateComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
     this.userId = Number(this.route.snapshot.paramMap.get('idUser'));
+    if (!this.accountService.checkRole(UserRole.Admin) && this.userId !== this.accountService.currentUser!.id) {
+      this.toastr.error('You don\'t have the permissions to edit this user.');
+      this.router.navigate(['']);
+      return;
+    }
     this.addressId = Number(this.route.snapshot.paramMap.get('idAddress'));
     this.page = "/users/" + this.userId.toString();
     this.isLoading = true;
@@ -64,12 +72,14 @@ export class AddressUpdateComponent implements OnInit {
 
   updateAddress(): void {
     this.isLoading = true;
-    this.userService.updateAddress(this.addressId, this.formGroup.value).subscribe({
-      next: (_) => {
-        this.isLoading = false;
-        this.toastr.success('Successfully updated address!');
-        this.goToPage(`/users/` + this.userId.toString());
-      }, error: (err: any) => this.toastr.error(JSON.stringify(err))
+    this.userService.updateAddress(this.addressId, this.formGroup.value)
+      .pipe(switchMap((_) => this.accountService.refreshCurrentUser()))
+      .subscribe({
+        next: (_) => {
+          this.isLoading = false;
+          this.toastr.success('Successfully updated address!');
+          this.goToPage(`/users/` + this.userId.toString());
+        }, error: (err: any) => this.toastr.error(JSON.stringify(err))
     });
   }
 }

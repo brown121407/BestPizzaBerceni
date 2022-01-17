@@ -67,8 +67,13 @@ namespace BestPizzaBerceni.Controllers
         [Authorize]
         public async Task<ActionResult<UserDTO>> GetCurrentUser()
         {
-            var email = User.FindFirstValue(ClaimTypes.Email);
-            var user = await _userRepository.GetByEmailWithRolesAsync(email);
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userRepository.GetByIdAsync(int.Parse(id));
+            if (user is null)
+            {
+                return NotFound();
+            }
+            
             return new UserDTO
             {
                 Id = user.Id,

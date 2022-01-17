@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'list',
     component: OrderListComponent,
-    canActivate: [StoreEmployeeGuard, DeliveryEmployeeGuard]
+    canActivate: [CustomerGuard]
   },
   {
     path: 'cart',

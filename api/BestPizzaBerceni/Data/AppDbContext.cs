@@ -28,6 +28,12 @@ namespace BestPizzaBerceni.Data
                 .HasOne(e => e.Order)
                 .WithMany(e => e.OrderStatusUpdates)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .Entity<OrderItem>()
+                .HasOne(oi => oi.Coupon)
+                .WithOne(c => c.OrderItem)
+                .OnDelete(DeleteBehavior.SetNull);
         }
         
         public DbSet<Ingredient> Ingredients { get; set; }

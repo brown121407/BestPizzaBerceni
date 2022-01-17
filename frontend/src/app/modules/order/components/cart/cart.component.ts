@@ -2,7 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ICartItem, ICartItemUpdate } from "../../../../models/cart-item";
 import { OrderService } from "../../services/order.service";
 import { AccountService } from "../../../account/services/account.service";
-import { forkJoin } from "rxjs";
+import { forkJoin, switchMap } from "rxjs";
+import { IOrder } from "../../../../models/order";
+import { ToastrService } from "ngx-toastr";
+import { IUser, UserRole } from "../../../../models/user";
+import { IAddress } from "../../../../models/address";
+import { UserService } from "../../../users/services/user.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-cart',
@@ -13,14 +19,33 @@ export class CartComponent implements OnInit {
   cartItems: ICartItem[] = [];
   isLoading: boolean = false;
   hasChanged: boolean = false;
+  selectedAddressId: number | null = null;
+  user!: IUser;
+  addresses: IAddress[] = [];
 
-  constructor(private orderService: OrderService, private accountService: AccountService) { }
+  constructor(
+    private orderService: OrderService,
+    private accountService: AccountService,
+    private toastr: ToastrService,
+    private userService: UserService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.user = this.accountService.currentUser!;
     this.isLoading = true;
-    this.orderService.getCartItemsOfUser(this.accountService.currentUser!.id)
-      .subscribe((cartItems: ICartItem[]) => {
+    this.orderService.getCartItemsOfUser(this.user.id)
+      .pipe(switchMap((cartItems: ICartItem[]) => {
         this.cartItems = cartItems;
+
+        return this.userService.getAddresses();
+      }))
+      .subscribe((addresses: IAddress[]) => {
+        this.addresses = addresses.filter((address: IAddress) =>{
+          const index = this.user.addresses.findIndex((x: number) => x == address.id);
+          return index != -1;
+        });
+
         this.isLoading = false;
       });
   }
@@ -69,6 +94,14 @@ export class CartComponent implements OnInit {
   }
 
   order(): void {
-    // TODO create an order with the current cart items.
+    this.orderService.createOrder(this.cartItems, this.selectedAddressId!)
+      .subscribe({
+        next: (_: IOrder) => {
+          this.toastr.success('Successfully created order.');
+          this.router.navigate(['orders', 'list']);
+        }, error: (err: any) => {
+          this.toastr.error(JSON.stringify(err));
+        }
+      });
   }
 }

@@ -39,3 +39,10 @@ ul {
 .buttons {
   height: 50px;
 }
+
+.text-fields {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
