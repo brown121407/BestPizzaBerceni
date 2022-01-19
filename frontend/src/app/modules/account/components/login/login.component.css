@@ -12,10 +12,6 @@ form {
   color: red;
 }
 
-.btn-login {
-  min-height: 1rem;
-}
-
 .btn-login mat-progress-bar {
   position: absolute;
   margin: 0 auto;

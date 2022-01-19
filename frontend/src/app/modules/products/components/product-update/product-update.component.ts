@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {IIngredient} from "../../../../models/ingredient";
-import {IProduct, IProductUpdate} from "../../../../models/product";
-import {ProductService} from "../../services/product.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
-import {IngredientService} from "../../../ingredients/services/ingredient.service";
-import {switchMap} from "rxjs";
-import {IProductVariant} from "../../../../models/product-variant";
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { IIngredient } from "../../../../models/ingredient";
+import { IProduct, IProductUpdate } from "../../../../models/product";
+import { ProductService } from "../../services/product.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
+import { IngredientService } from "../../../ingredients/services/ingredient.service";
+import { IProductVariant } from "../../../../models/product-variant";
+import { ProductVariantService } from "../../services/product-variant.service";
 
 @Component({
   selector: 'app-product-update',
@@ -22,8 +22,15 @@ export class ProductUpdateComponent implements OnInit {
   id!: number;
   productVariants: IProductVariant[] = [];
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private productService: ProductService, private router: Router, private toastr: ToastrService, private ingredientService: IngredientService) {
-  }
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private router: Router,
+    private toastr: ToastrService,
+    private ingredientService: IngredientService,
+    private productVariantService: ProductVariantService
+  ) {}
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -34,7 +41,7 @@ export class ProductUpdateComponent implements OnInit {
         ingredients: res.ingredients!.map(x => x.id),
         productVariants: res.productVariants!.map(x => x.id!),
       };
-      this.productService.getProductVariants().subscribe((result: IProductVariant[]) => {
+      this.productVariantService.getProductVariants().subscribe((result: IProductVariant[]) => {
         this.productVariants = result.filter((variant: IProductVariant) =>{
           const index = this.product.productVariants.findIndex(x => x == variant.id);
           return index != -1;
@@ -45,7 +52,7 @@ export class ProductUpdateComponent implements OnInit {
         id: [this.id, Validators.required],
         name: [this.product?.name, Validators.required],
         checkboxes: new FormArray([])
-      })
+      });
 
       this.ingredientService.getIngredients().subscribe((ingred: IIngredient[]) => {
         this.ingredients = ingred;
@@ -55,24 +62,23 @@ export class ProductUpdateComponent implements OnInit {
           if (index != -1) {
             (this.formGroup.get('checkboxes') as FormArray).at(index).setValue(true);
           }
-        })
+        });
+
         this.isLoading = false;
-      })
-    })
+      });
+    });
   }
 
-  goToPage(pageName: string) {
-    //console.log(this.product.id);
+  goToPage(pageName: string): void {
     this.router.navigate([`${pageName}`]);
   }
 
-  updateProduct() {
+  updateProduct(): void {
     this.isLoading = true;
     const arrayControl = (this.formGroup.get('checkboxes') as FormArray);
-    const ingredients1 = this.ingredients.filter((_, index) => arrayControl.at(index).value)
-      .map((ingredient:IIngredient) => ingredient.id);
-
-    this.product.ingredients = ingredients1;
+    this.product.ingredients = this.ingredients
+      .filter((_, index) => arrayControl.at(index).value)
+      .map((ingredient: IIngredient) => ingredient.id);
     this.product.name = this.formGroup.get('name')?.value;
 
     this.productService.updateProduct(this.id, this.product).subscribe({
@@ -83,12 +89,11 @@ export class ProductUpdateComponent implements OnInit {
       }, error: (err: any) => this.toastr.error(JSON.stringify(err))
     });
   }
-  deleteVariant(variantId: number): void{
-      this.productService.deleteProductVariantById(variantId).subscribe((_) => {
-        this.toastr.success("Product Variant deleted successfully");
-        this.productVariants = this.productVariants.filter((prod: IProduct) => prod.id !== variantId);
-      })
+
+  deleteVariant(variantId: number): void {
+    this.productVariantService.deleteProductVariantById(variantId).subscribe((_) => {
+      this.toastr.success("Product Variant deleted successfully");
+      this.productVariants = this.productVariants.filter((prod: IProduct) => prod.id !== variantId);
+    });
   }
-
-
 }

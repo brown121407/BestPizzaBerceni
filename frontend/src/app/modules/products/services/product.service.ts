@@ -9,12 +9,9 @@ import {IProductVariant, IProductVariantCreate, IProductVariantUpdate} from "../
   providedIn: 'root'
 })
 export class ProductService {
-  private url: string = environment.apiUrl;
-
   constructor(private httpClient: HttpClient) { }
 
-  // For Product
-  getProducts(): Observable<IProduct[]>{
+  getProducts(): Observable<IProduct[]> {
     return this.httpClient.get<IProduct[]>(`${environment.apiUrl}/products`, { withCredentials: true });
   }
 
@@ -22,39 +19,15 @@ export class ProductService {
     return this.httpClient.post<IProduct>(`${environment.apiUrl}/products`, product);
   }
 
-  getProductById(productId: number): Observable<IProduct>{
+  getProductById(productId: number): Observable<IProduct> {
     return this.httpClient.get<IProduct>(`${environment.apiUrl}/products/` + productId.toString());
   }
 
-  deleteProductById(productId: number): Observable<any>{
+  deleteProductById(productId: number): Observable<any> {
     return this.httpClient.delete(`${environment.apiUrl}/products/` + productId.toString());
   }
 
-  updateProduct(id: number, product: IProductUpdate): Observable<any>{
+  updateProduct(id: number, product: IProductUpdate): Observable<any> {
     return this.httpClient.put(`${environment.apiUrl}/products/${id}`, product);
-  }
-
-  //For Product-Variant
-  getProductVariants(): Observable<IProductVariant[]>{
-    return this.httpClient.get<IProductVariant[]>(`${environment.apiUrl}/productvariants/`, {withCredentials: true});
-  }
-
-  addProductVariant(productVariant: IProductVariantCreate){
-    return this.httpClient.post(`${environment.apiUrl}/productvariants/`, productVariant);
-  }
-
-  getProductVariantsById(id: number): Observable<IProductVariant>{
-    return this.httpClient.get<IProductVariant>(`${environment.apiUrl}/productvariants/` + id.toString());
-  }
-
-  deleteProductVariantById(idProductVariant: number): Observable<any>{
-    return this.httpClient.delete(`${environment.apiUrl}/productvariants/` + idProductVariant.toString());
-  }
-
-  // updateProductVariant(productVariant: IProductVariant): Observable<any>{
-  //   return this.httpClient.put(`${environment.apiUrl}/productvariants/` + productVariant.id.toString(), productVariant);
-  // }
-  updateProductVariant(id: number, variant: IProductVariantUpdate): Observable<any>{
-    return this.httpClient.put(`${environment.apiUrl}/productvariants/${id}`, variant);
   }
 }

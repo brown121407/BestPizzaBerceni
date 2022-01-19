@@ -1,0 +1,32 @@
+<h1>Select variant of {{ product.name }}</h1>
+
+<div *ngIf="product.productVariants!.length > 0">
+  <mat-radio-group [(ngModel)]="selectedIndex">
+    <table>
+      <thead>
+        <th></th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let variant of product.productVariants!; index as i" >
+          <td>
+            <mat-radio-button [value]="i"></mat-radio-button>
+          </td>
+          <td>{{ variant.name }}</td>
+          <td>{{ variant.quantity }} {{ variant.unit }}</td>
+          <td>{{ variant.price }} €</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-radio-group>
+
+  <div class="actions">
+    <button mat-raised-button color="warn" (click)="dialogRef.close()">Cancel</button>
+    <span class="spacer"></span>
+    <button mat-raised-button color="accent" (click)="addToCart()">Add</button>
+  </div>
+</div>
+
+<p *ngIf="!product.productVariants!.length">No product variants found. Please contact site administrators.</p>

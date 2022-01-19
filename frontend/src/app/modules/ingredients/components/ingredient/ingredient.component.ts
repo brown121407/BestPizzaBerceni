@@ -17,7 +17,6 @@ export class IngredientComponent implements OnInit {
 
   constructor(private ingredientService: IngredientService, private router: Router, private toastr: ToastrService) { }
 
-
   ngOnInit(): void {
     this.ingredientService.getIngredients().subscribe((res: IIngredient[])  => this.ingredients = res);
   }
@@ -31,16 +30,11 @@ export class IngredientComponent implements OnInit {
     this.hasChanged = true;
   }
 
-  updateIngredients(): void {
-
-    this.hasChanged = false;
-  }
   goToPage(pageName: string){
     this.router.navigate([`${pageName}`]);
   }
 
   deleteIngred(id: number){
-    // const id = Number(this.route.snapshot.paramMap.get('id'));
     this.ingredientService.deleteIngredient(id).subscribe((_) =>
       {
         this.toastr.success("Ingredient deleted successfully");
@@ -48,6 +42,4 @@ export class IngredientComponent implements OnInit {
       }
     );
   }
-
-
 }

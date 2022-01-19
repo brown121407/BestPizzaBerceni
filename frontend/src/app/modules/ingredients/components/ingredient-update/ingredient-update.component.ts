@@ -22,7 +22,13 @@ export class IngredientUpdateComponent implements OnInit {
     'allergen': new FormControl(false)
   });
 
-  constructor(private ingredientService: IngredientService, private router: Router, private route: ActivatedRoute, private toastr:ToastrService, private fb: FormBuilder ) { }
+  constructor(
+    private ingredientService: IngredientService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private toastr:ToastrService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -41,15 +47,15 @@ export class IngredientUpdateComponent implements OnInit {
     });
   }
 
-  goToPage(pageName: string){
+  goToPage(pageName: string): void {
     this.router.navigate([`${pageName}`]);
   }
 
-  addIngred(): void{
+  addIngred(): void {
     this.ingredientService.addIngredient(this.formGroup.value);
   }
 
-  updateIngred():void{
+  updateIngred():void {
     this.isLoading = true;
     if(typeof(this.formGroup.getRawValue()) != "undefined" ) {
       this.ingredientService.updateIngredient(this.formGroup.value).subscribe({

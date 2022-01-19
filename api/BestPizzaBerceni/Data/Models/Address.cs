@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using BestPizzaBerceni.Data.Models;
@@ -15,8 +16,8 @@ namespace BestPizzaBerceni.Data.Models
         public string PostalCode { get; set; }
         public string PhoneNumber { get; set; }
 
-        public int UserId { get; set; }
+        [Required]
         public User User { get; set; }
-        public ICollection<Order>  Orders { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }

@@ -10,23 +10,33 @@ import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { OrderComponent } from './components/order/order.component';
 import { OrderRoutingModule } from "./order-routing.module";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatRadioModule } from "@angular/material/radio";
+import { CartItemPricePipe } from './pipes/cart-item-price.pipe';
+import { OrderItemPricePipe } from './pipes/order-item-price.pipe';
+import { DirectivesModule } from "../directives/directives.module";
 
 @NgModule({
   declarations: [
     CartComponent,
     OrderListComponent,
-    OrderComponent
+    OrderComponent,
+    CartItemPricePipe,
+    OrderItemPricePipe
   ],
-  imports: [
-    CommonModule,
-    OrderRoutingModule,
-    MatFormFieldModule,
-    MatCardModule,
-    FormsModule,
-    MatChipsModule,
-    MatInputModule,
-    MatButtonModule
-  ],
+    imports: [
+        CommonModule,
+        OrderRoutingModule,
+        MatFormFieldModule,
+        MatCardModule,
+        FormsModule,
+        MatChipsModule,
+        MatInputModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        MatRadioModule,
+        DirectivesModule
+    ],
   exports: [
     CartComponent,
     OrderListComponent

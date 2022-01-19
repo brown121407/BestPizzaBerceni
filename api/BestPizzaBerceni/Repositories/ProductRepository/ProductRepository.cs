@@ -15,14 +15,6 @@ namespace BestPizzaBerceni.Repositories.ProductRepository
         {
             
         }
-        
-        public override Product? GetById(int id)
-        {
-            return DbContext.Products
-                .Include(p => p.Ingredients)
-                .Include(p => p.ProductVariants)
-                .FirstOrDefault(u => u.Id == id);
-        }
 
         public override async Task<Product?> GetByIdAsync(int id)
         {
@@ -30,14 +22,6 @@ namespace BestPizzaBerceni.Repositories.ProductRepository
                 .Include(p => p.Ingredients)
                 .Include(p => p.ProductVariants)
                 .FirstOrDefaultAsync(u => u.Id == id);
-        }
-        
-        public override List<Product> GetAll()
-        {
-            return DbContext.Products
-                .Include(p => p.Ingredients)
-                .Include(p => p.ProductVariants)
-                .ToList();
         }
 
         public override async Task<List<Product>> GetAllAsync()

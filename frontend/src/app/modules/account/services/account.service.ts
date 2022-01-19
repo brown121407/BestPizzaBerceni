@@ -22,8 +22,26 @@ export class AccountService {
     this.currentUser$ = this.currentUserSubject.asObservable();
   }
 
-  checkRoles(expectedRole: UserRole): boolean {
-    return checkRoles(this.currentUser!, expectedRole);
+  /**
+   * Check if the current user has a role compatible with `expectedRole`.
+   * @param expectedRole
+   */
+  checkRole(expectedRole: UserRole): boolean {
+    return checkRoles(this.currentUser, expectedRole);
+  }
+
+  /**
+   * Check if the current user has a role compatible with any of the `expectedRoles`.
+   * @param expectedRoles
+   */
+  checkRoles(expectedRoles: UserRole[]): boolean {
+    for (let role of expectedRoles) {
+      if (checkRoles(this.currentUser, role)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   signUp(user: IUserSignup): Observable<any> {
@@ -35,16 +53,7 @@ export class AccountService {
       .pipe(
         switchMap((token: string) => {
           localStorage.setItem('token', token);
-          return this.me();
-        }),
-        map((me: Partial<IUser>) => {
-          const user = {
-            token: localStorage.getItem('token')!,
-            ...me
-          } as IUser;
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-          return user;
+          return this.refreshCurrentUser();
         })
       );
   }
@@ -53,6 +62,17 @@ export class AccountService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.currentUserSubject.next(null);
+  }
+
+  refreshCurrentUser(): Observable<any> {
+    return this.me().pipe(tap((me: Partial<IUser>) => {
+      const user = {
+        token: localStorage.getItem('token')!,
+        ...me
+      } as IUser;
+      localStorage.setItem('user', JSON.stringify(user));
+      this.currentUserSubject.next(user);
+    }));
   }
 
   me(): Observable<Partial<IUser>> {

@@ -1,18 +1,16 @@
-<div class="container">
-  <mat-card class="add-ing-body"><mat-card-title>Add Ingredient </mat-card-title>
-  <form [formGroup]="formGroup">
-    <mat-card>
+<h1>Add Ingredient</h1>
+
+<form [formGroup]="formGroup">
+  <mat-card>
     <mat-form-field appearance="fill" color="primary">
       <mat-label>Name</mat-label>
       <input matInput type="text" formControlName="name">
     </mat-form-field>
-      <h3>Select ingredient info:</h3>
-      <p><mat-checkbox formControlName="spicy">Spicy</mat-checkbox></p>
-      <p><mat-checkbox formControlName="allergen">Allergen</mat-checkbox></p>
-    </mat-card>
-
-  </form>
-    <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="addIngred()">Add Ingredient</button>
-    <button mat-raised-button color="primary" class="btn-add" (click)="goToPage('/ingredients/list')">Go Back</button>
+    <h3>Select ingredient info:</h3>
+    <p><mat-checkbox formControlName="spicy">Spicy</mat-checkbox></p>
+    <p><mat-checkbox formControlName="allergen">Allergen</mat-checkbox></p>
   </mat-card>
-</div>
+</form>
+
+<button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="addIngred()">Add Ingredient</button>
+<button mat-raised-button color="primary" class="btn-add" (click)="goToPage('/ingredients/list')">Go Back</button>

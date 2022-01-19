@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq;
 using System.Threading.Tasks;
 using BestPizzaBerceni.Data;
 using BestPizzaBerceni.Models;
@@ -16,28 +15,12 @@ namespace BestPizzaBerceni.Repositories.UserRepository
         {
         }
 
-        public override List<User> GetAll()
-        {
-            return DbContext.Users
-                .Include(u => u.Roles)
-                .Include(u => u.Addresses)
-                .ToList();
-        }
-
         public override async Task<List<User>> GetAllAsync()
         {
             return await DbContext.Users
                 .Include(u => u.Roles)
                 .Include(u => u.Addresses)
                 .ToListAsync();
-        }
-
-        public override User? GetById(int id)
-        {
-            return DbContext.Users
-                .Include(u => u.Roles)
-                .Include(u => u.Addresses)
-                .FirstOrDefault(u => u.Id == id);
         }
 
         public override async Task<User?> GetByIdAsync(int id)

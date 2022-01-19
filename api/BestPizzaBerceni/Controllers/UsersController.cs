@@ -81,7 +81,7 @@ namespace BestPizzaBerceni.Controllers
             
             realUser.FirstName = user.FirstName;
             realUser.LastName = user.LastName;
-            //realUser.Email = user.Email;
+            realUser.Email = user.Email;
             realUser.Roles.Clear();
             realUser.Addresses.Clear();
 
@@ -111,12 +111,6 @@ namespace BestPizzaBerceni.Controllers
         }
 
         [HttpPost]
-        /*public async Task<ActionResult<Ingredient>> PostUser(User user)
-        {
-            await _usersRepository.CreateAsync(user);
-
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
-        }*/
         public async Task<ActionResult<User>> PostUser([FromBody] UserDTO dto)
         {
             var roles = (await _rolesRepository.GetAllAsync())
@@ -128,7 +122,6 @@ namespace BestPizzaBerceni.Controllers
 
             var user = new User
             {
-                Id = dto.Id,
                 Email = dto.Email,
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,

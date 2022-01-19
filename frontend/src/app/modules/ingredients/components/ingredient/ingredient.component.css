@@ -4,22 +4,25 @@
   flex-wrap: wrap;
   gap: 1rem;
 }
-.info-button{
-  display:      inline-block;
+
+.info-button {
+  display: inline-block;
   float: right;
 }
+
 .button-row {
   display: table-cell;
   width: 100%;
   float: right;
-
 }
-.modify-button{
+
+.modify-button {
   float: right;
   margin-right: 20px;
 }
+
 .button-row .mat-button-base {
-  margin: 0px 5px 5px 5px;
+  margin: 0 5px 5px 5px;
 }
 
 .spacer {

@@ -11,12 +11,8 @@
       <input matInput type="password" formControlName="password">
     </mat-form-field>
 
-    <p *ngIf="invalidCredentials" class="error">Invalid credentials.</p>
+    <p *ngIf="invalidCredentials" appError>Invalid credentials.</p>
 
-    <button mat-raised-button color="primary" class="btn-login" [disabled]="formGroup.invalid || isLoading"
-            (click)="login()">
-      <span [ngStyle]="{ visibility: isLoading ? 'hidden' : 'initial' }">Log In</span>
-      <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-    </button>
+    <app-button [isLoading]="isLoading" [disabled]="formGroup.invalid" (click)="login()">Log In</app-button>
   </form>
 </div>

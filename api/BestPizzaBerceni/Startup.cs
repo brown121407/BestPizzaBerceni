@@ -8,7 +8,9 @@ using BestPizzaBerceni.Data;
 using BestPizzaBerceni.Data.Models;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.CartItemRepository;
 using BestPizzaBerceni.Repositories.CouponRepository;
+using BestPizzaBerceni.Repositories.OrderRepository;
 using BestPizzaBerceni.Repositories.ProductRepository;
 using BestPizzaBerceni.Repositories.RoleRepository;
 using BestPizzaBerceni.Repositories.UserRepository;
@@ -101,12 +103,14 @@ namespace BestPizzaBerceni
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRepository<Token, string>, Repository<Token, string>>();
             services.AddScoped<IRepository<Address, int>, Repository<Address, int>>();
-            services.AddScoped<IRepository<Order, int>, Repository<Order, int>>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IRepository<OrderStatusUpdate, int>, Repository<OrderStatusUpdate, int>>();
             services.AddScoped<ICouponRepository, CouponRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<ICartItemRepository, CartItemRepository>();
+            services.AddScoped<IRepository<OrderItem, int>, Repository<OrderItem, int>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

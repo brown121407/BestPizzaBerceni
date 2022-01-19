@@ -1,7 +1,8 @@
-.info-button{
+.info-button {
   display: inline-block;
   float: right;
 }
+
 chip {
   padding-right: 200px;
 }
@@ -13,16 +14,22 @@ chip {
   gap: 1rem;
 }
 
-.button-row {
-  display: table-cell;
-  width: 100%;
-  float: right;
-
+dt {
+  font-weight: bold;
 }
-.modify-button{
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.modify-button {
   float: right;
   margin-right: 20px;
 }
+
 .button-row .mat-button-base {
   margin: 0px 5px 5px 5px;
 }
@@ -49,11 +56,11 @@ input {
   width: 5rem;
 }
 
-
 .total {
   text-align: right;
   font-weight: bold;
 }
+
 mat-card-title {
   padding-right: 10px;
 }

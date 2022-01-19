@@ -4,12 +4,14 @@ import { CartComponent } from "./components/cart/cart.component";
 import { OrderListComponent } from "./components/order-list/order-list.component";
 import { OrderComponent } from "./components/order/order.component";
 import { CustomerGuard } from "../account/guards/customer.guard";
-import { AdminGuard } from "../account/guards/admin.guard";
+import { StoreEmployeeGuard } from "../account/guards/store-employee.guard";
+import { DeliveryEmployeeGuard } from "../account/guards/delivery-employee.guard";
 
 const routes: Routes = [
   {
     path: 'list',
     component: OrderListComponent,
+    canActivate: [CustomerGuard]
   },
   {
     path: 'cart',

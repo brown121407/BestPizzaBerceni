@@ -13,13 +13,16 @@ import { AccountRoutingModule } from "./account-routing.module";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { JwtModule } from "@auth0/angular-jwt";
-import { tokenGetter } from "../../app.module";
+import { AppModule, tokenGetter } from "../../app.module";
+import { ErrorDirective } from "./directives/error.directive";
+import { UiModule } from "../ui/ui.module";
 
 @NgModule({
   declarations: [
     LoginComponent,
     SignupComponent,
     ProfileComponent,
+    ErrorDirective
   ],
   imports: [
     CommonModule,
@@ -31,6 +34,10 @@ import { tokenGetter } from "../../app.module";
     MatProgressSpinnerModule,
     MatInputModule,
     MatButtonModule,
+    UiModule,
+  ],
+  exports: [
+    ErrorDirective
   ]
 })
 export class AccountModule { }

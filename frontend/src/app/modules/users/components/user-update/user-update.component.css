@@ -9,26 +9,32 @@
   margin-left: 20px;
 }
 
-.add-ing-body {
-  height: 100%;
-}
 .button-row {
-  display: table-cell;
-  width: 100%;
-  float: right;
-  margin-top: 5px;
-  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  gap: 0.5rem;
 }
+
+mat-card {
+  margin-bottom: 1rem;
+}
+
 .button-row .mat-button-base {
   margin: 0px 5px 5px 5px;
-}
-ul {
-  list-style-type: none;
 }
 
 .spacer {
   flex-grow: 99;
 }
-.buttons{
+
+.buttons {
   height: 50px;
+}
+
+.text-fields {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
 }

@@ -120,13 +120,16 @@ namespace BestPizzaBerceni.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("CouponId")
+                    b.Property<int?>("CouponId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("ProductVariantId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -529,8 +532,7 @@ namespace BestPizzaBerceni.Migrations
                     b.HasOne("BestPizzaBerceni.Data.Models.Coupon", "Coupon")
                         .WithOne("OrderItem")
                         .HasForeignKey("BestPizzaBerceni.Data.Models.OrderItem", "CouponId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("BestPizzaBerceni.Data.Models.Order", "Order")
                         .WithMany("OrderItems")

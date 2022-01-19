@@ -1,58 +1,60 @@
-<div class="container">
-  <mat-spinner *ngIf="isLoading else loaded"></mat-spinner>
-  <ng-template #loaded>
-    <mat-card class="add-ing-body" ><mat-card-title>Update Product {{product.name!}} </mat-card-title>
-      <form [formGroup]="formGroup">
-        <mat-card>
-          <mat-form-field appearance="fill" color="primary">
-            <mat-label>Name</mat-label>
-            <input matInput type="text" formControlName="name">
-          </mat-form-field>
-          <h3>Select ingredients:</h3>
-          <ng-container formArrayName="checkboxes">
-            <ul>
-              <li *ngFor="let ingredient of ingredients; index as i">
-                <mat-card>
-                  <p><mat-checkbox [formControlName]="i">
-                    <mat-card-title>
-                      {{ ingredient.name}}
-                    </mat-card-title>
-                    <mat-chip-list aria-label="Info-label">
-                      <mat-chip *ngIf="ingredient.spicy == true;" color="warn" selected>Spicy</mat-chip>
-                      <mat-chip *ngIf="ingredient.allergen == true;" color="accent" selected>Allergen</mat-chip>
-                    </mat-chip-list>
-                  </mat-checkbox></p>
-                </mat-card>
-              </li>
-            </ul>
-          </ng-container>
-        </mat-card>
-      </form>
-      <div class="button-row">
-        <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="updateProduct()">Update Product</button>
-        <a routerLink="/products/{{id}}/variants/new" mat-raised-button class = "btn-add" color="primary">Add Product Variant</a>
-        <button mat-raised-button color="primary" class="btn-add" (click)="goToPage('/products/list')">Go Back</button>
-        <span class="spacer"></span>
-      </div>
-        <mat-card-title>Product Variants:</mat-card-title>
-          <li *ngFor="let variant of productVariants; index as k">
-              <mat-card>
-                <mat-card-title>{{variant.name}}</mat-card-title>
-                <div class="button-row">
-                  <a routerLink="/products/{{id}}/variants/{{variant.id!}}" mat-raised-button class="btn-add"  color="primary">Edit</a>
-                  <button mat-raised-button class="btn-add"  color="warn" (click)="deleteVariant(variant.id!)">Delete</button>
-                </div>
+<mat-spinner *ngIf="isLoading else loaded"></mat-spinner>
+
+<ng-template #loaded>
+  <h1>Update {{ product.name }}</h1>
+
+  <form [formGroup]="formGroup">
+    <mat-card>
+      <mat-form-field appearance="fill" color="primary">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name">
+      </mat-form-field>
+      <h3>Select ingredients:</h3>
+      <ng-container formArrayName="checkboxes">
+        <ul>
+          <li *ngFor="let ingredient of ingredients; index as i">
+            <mat-card>
+              <p><mat-checkbox [formControlName]="i">
+                <mat-card-title>
+                  {{ ingredient.name}}
+                </mat-card-title>
                 <mat-chip-list aria-label="Info-label">
-                  <mat-chip  color="warn" selected>{{variant.quantity + variant.unit}}</mat-chip>
-                  <mat-chip  color="accent" selected>{{variant.price + "€"}}</mat-chip>
+                  <mat-chip *ngIf="ingredient.spicy == true;" color="warn" selected>Spicy</mat-chip>
+                  <mat-chip *ngIf="ingredient.allergen == true;" color="accent" selected>Allergen</mat-chip>
                 </mat-chip-list>
-
-              </mat-card>
+              </mat-checkbox></p>
+            </mat-card>
           </li>
-        <p *ngIf="productVariants.length <= 0">
-          <mat-card><mat-card-title>You don't have any product variants. </mat-card-title></mat-card>
-        </p>
+        </ul>
+      </ng-container>
+    </mat-card>
+  </form>
 
+  <div class="button-row">
+    <button mat-raised-button color="primary" class="btn-add" [disabled]="formGroup.invalid" (click)="updateProduct()">Update Product</button>
+    <button mat-raised-button color="primary" class="btn-add" (click)="goToPage('/products/list')">Go Back</button>
+  </div>
+
+  <h1>Product Variants</h1>
+  <ul>
+    <li *ngFor="let variant of productVariants; index as k">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{variant.name}}</mat-card-title>
+          <mat-chip-list aria-label="Info-label">
+            <mat-chip  color="warn" selected>{{variant.quantity + variant.unit}}</mat-chip>
+            <mat-chip  color="accent" selected>{{variant.price + "€"}}</mat-chip>
+          </mat-chip-list>
+        </mat-card-header>
+        <div class="button-row">
+          <a routerLink="/products/{{id}}/variants/{{variant.id!}}" mat-raised-button class="btn-add" color="primary">Edit</a>
+          <button mat-raised-button class="btn-add"  color="warn" (click)="deleteVariant(variant.id!)">Delete</button>
+        </div>
       </mat-card>
-  </ng-template>
-</div>
+    </li>
+  </ul>
+  <p *ngIf="productVariants.length <= 0">
+    You don't have any product variants.
+  </p>
+  <a routerLink="/products/{{id}}/variants/new" mat-raised-button class="btn-add" color="primary">Add Product Variant</a>
+</ng-template>

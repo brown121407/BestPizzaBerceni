@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PageNotFoundService } from './error.service';
+import { CartService } from './cart.service';
 
-describe('PageNotFoundService', () => {
-  let service: PageNotFoundService;
+describe('CartService', () => {
+  let service: CartService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PageNotFoundService);
+    service = TestBed.inject(CartService);
   });
 
   it('should be created', () => {

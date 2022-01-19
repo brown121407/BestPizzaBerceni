@@ -20,3 +20,24 @@ main {
   max-width: 60rem;
   margin: 0 auto;
 }
+
+mat-sidenav-container {
+  min-height: 100vh;
+}
+
+mat-sidenav ul {
+  list-style-type: none;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+mat-sidenav li {
+  width: 100%;
+}
+
+mat-sidenav a, mat-sidenav button {
+  width: 100%;
+}

@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BestPizzaBerceni.Data.DTOs.CartItem;
 using BestPizzaBerceni.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using BestPizzaBerceni.Models;
 using BestPizzaBerceni.Repositories;
+using BestPizzaBerceni.Repositories.CartItemRepository;
+using BestPizzaBerceni.Repositories.UserRepository;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BestPizzaBerceni.Controllers
@@ -12,17 +15,26 @@ namespace BestPizzaBerceni.Controllers
     [ApiController]
     public class CartItemsController: ControllerBase
     {
-        private readonly IRepository<CartItem, int> _cartItemRepository;
+        private readonly ICartItemRepository _cartItemRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IRepository<ProductVariant, int> _productVariantRepository;
 
-        public CartItemsController(IRepository<CartItem, int> cartItemRepository)
+        public CartItemsController(ICartItemRepository cartItemRepository, IUserRepository userRepository, IRepository<ProductVariant, int> productVariantRepository)
         {
             _cartItemRepository = cartItemRepository;
+            _userRepository = userRepository;
+            _productVariantRepository = productVariantRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CartItem>>> GetCartItems()
+        public async Task<ActionResult<IEnumerable<CartItem>>> GetCartItems([FromQuery] int? userId)
         {
-            return await _cartItemRepository.GetAllAsync();
+            if (userId is null)
+            {
+                return await _cartItemRepository.GetAllAsync();
+            }
+
+            return await _cartItemRepository.GetByUserId(userId.Value);
         }
 
         [HttpGet("{id}")]
@@ -39,21 +51,57 @@ namespace BestPizzaBerceni.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCartItem(int id, CartItem cartItem)
+        public async Task<ActionResult<CartItem>> PutCartItem(int id, CartItemUpdateDTO dto)
         {
-            if (id != cartItem.Id)
+            var cartItem = await _cartItemRepository.GetByIdAsync(id);
+            if (cartItem is null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            var user = await _userRepository.GetByIdWithRolesAsync(dto.User);
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            var productVariant = await _productVariantRepository.GetByIdAsync(dto.ProductVariant);
+            if (productVariant is null)
+            {
+                return NotFound();
+            }
+
+            cartItem.Quantity = dto.Quantity;
+            cartItem.User = user;
+            cartItem.ProductVariant = productVariant;
 
             await _cartItemRepository.UpdateAsync(cartItem);
 
-            return NoContent();
+            return Ok(cartItem);
         }
 
         [HttpPost]
-        public async Task<ActionResult<CartItem>> PostCartItem(CartItem cartItem)
+        public async Task<ActionResult<CartItem>> PostCartItem(CartItemCreateDTO dto)
         {
+            var user = await _userRepository.GetByIdWithRolesAsync(dto.User);
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            var productVariant = await _productVariantRepository.GetByIdAsync(dto.ProductVariant);
+            if (productVariant is null)
+            {
+                return NotFound();
+            }
+
+            var cartItem = new CartItem()
+            {
+                Quantity = dto.Quantity,
+                User = user,
+                ProductVariant = productVariant
+            };
+            
             await _cartItemRepository.CreateAsync(cartItem);
 
             return CreatedAtAction("GetCartItem", new {id = cartItem.Id}, cartItem);
