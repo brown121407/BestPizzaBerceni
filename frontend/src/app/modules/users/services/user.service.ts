@@ -30,28 +30,4 @@ export class UserService {
   updateUser(user: IUser): Observable<any> {
     return this.httpClient.put(`${environment.apiUrl}/users/` + user.id.toString(), user);
   }
-
-  getAddresses(): Observable<IAddress[]> {
-    return this.httpClient.get<IAddress[]>(`${environment.apiUrl}/addresses/`, {withCredentials: true});
-  }
-
-  addAddress(address: IAddressUpdate) {
-    return this.httpClient.post(`${environment.apiUrl}/addresses/`, address);
-  }
-
-  getAddressById(id: number): Observable<IAddress> {
-    return this.httpClient.get<IAddress>(`${environment.apiUrl}/addresses/` + id.toString());
-  }
-
-  deleteAddressById(idAddress: number): Observable<any> {
-    return this.httpClient.delete(`${environment.apiUrl}/addresses/` + idAddress.toString());
-  }
-
-  updateAddress(id: number, address: IAddressUpdate) {
-    return this.httpClient.put(`${environment.apiUrl}/addresses/${id}`, address);
-  }
-
-  deleteAddress(idAddress: number): Observable<any> {
-    return this.httpClient.delete(`${environment.apiUrl}/addresses/` + idAddress.toString());
-  }
 }

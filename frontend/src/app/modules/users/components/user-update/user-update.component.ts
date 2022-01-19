@@ -7,6 +7,7 @@ import { ToastrService } from "ngx-toastr";
 import { IAddress } from "../../../../models/address";
 import { AccountService } from "../../../account/services/account.service";
 import { switchMap } from "rxjs";
+import { AddressService } from "../../services/address.service";
 
 @Component({
   selector: 'app-user-update',
@@ -27,7 +28,8 @@ export class UserUpdateComponent implements OnInit {
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private addressService: AddressService
   ) { }
 
   ngOnInit(): void {
@@ -48,7 +50,7 @@ export class UserUpdateComponent implements OnInit {
         email: [this.user?.email, Validators.required],
         roles: new FormArray([])
       });
-      this.userService.getAddresses().subscribe(res => {
+      this.addressService.getAddresses().subscribe(res => {
         this.addresses = res.filter((address: IAddress) =>{
           const index = this.user.addresses.findIndex((x: number) => x == address.id);
           return index != -1;
@@ -90,7 +92,7 @@ export class UserUpdateComponent implements OnInit {
   }
 
   deleteAddress(id: number): void {
-    this.userService.deleteAddressById(id).subscribe((_) => {
+    this.addressService.deleteAddressById(id).subscribe((_) => {
       this.toastr.success("Address deleted successfully");
       this.addresses = this.addresses.filter((prod: IAddress) => prod.id !== id);
     });

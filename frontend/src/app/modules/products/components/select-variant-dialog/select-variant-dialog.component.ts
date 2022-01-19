@@ -5,7 +5,7 @@ import { OrderService } from "../../../order/services/order.service";
 import { ICartItemCreate } from "../../../../models/cart-item";
 import { AccountService } from "../../../account/services/account.service";
 import { ToastrService } from "ngx-toastr";
-import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { CartService } from "../../../order/services/cart.service";
 
 @Component({
   selector: 'app-select-variant-dialog',
@@ -21,7 +21,7 @@ export class SelectVariantDialogComponent implements OnInit {
     private orderService: OrderService,
     private accountService: AccountService,
     private toastr: ToastrService,
-    private fb: FormBuilder
+    private cartService: CartService
   ) {
   }
 
@@ -34,7 +34,7 @@ export class SelectVariantDialogComponent implements OnInit {
       quantity: 1
     };
 
-    this.orderService.addCartItem(cartItem)
+    this.cartService.addCartItem(cartItem)
       .subscribe((_) => {
         this.toastr.success('Successfully added item to cart.');
         this.dialogRef.close();

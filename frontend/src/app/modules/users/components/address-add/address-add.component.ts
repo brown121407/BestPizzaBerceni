@@ -7,6 +7,7 @@ import { IUser, UserRole } from "../../../../models/user";
 import {IAddress} from "../../../../models/address";
 import { AccountService } from "../../../account/services/account.service";
 import { switchMap } from "rxjs";
+import { AddressService } from "../../services/address.service";
 
 @Component({
   selector: 'app-address-add',
@@ -32,7 +33,8 @@ export class AddressAddComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private addressService: AddressService
   ) { }
 
   ngOnInit(): void {
@@ -65,7 +67,7 @@ export class AddressAddComponent implements OnInit {
       user: this.id
     };
 
-    this.userService.addAddress(address)
+    this.addressService.addAddress(address)
       .pipe(
         switchMap(
           (_) => this.accountService.refreshCurrentUser()

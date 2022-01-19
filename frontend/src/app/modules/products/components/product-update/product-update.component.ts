@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { IngredientService } from "../../../ingredients/services/ingredient.service";
 import { IProductVariant } from "../../../../models/product-variant";
+import { ProductVariantService } from "../../services/product-variant.service";
 
 @Component({
   selector: 'app-product-update',
@@ -27,7 +28,8 @@ export class ProductUpdateComponent implements OnInit {
     private productService: ProductService,
     private router: Router,
     private toastr: ToastrService,
-    private ingredientService: IngredientService
+    private ingredientService: IngredientService,
+    private productVariantService: ProductVariantService
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +41,7 @@ export class ProductUpdateComponent implements OnInit {
         ingredients: res.ingredients!.map(x => x.id),
         productVariants: res.productVariants!.map(x => x.id!),
       };
-      this.productService.getProductVariants().subscribe((result: IProductVariant[]) => {
+      this.productVariantService.getProductVariants().subscribe((result: IProductVariant[]) => {
         this.productVariants = result.filter((variant: IProductVariant) =>{
           const index = this.product.productVariants.findIndex(x => x == variant.id);
           return index != -1;
@@ -89,7 +91,7 @@ export class ProductUpdateComponent implements OnInit {
   }
 
   deleteVariant(variantId: number): void {
-    this.productService.deleteProductVariantById(variantId).subscribe((_) => {
+    this.productVariantService.deleteProductVariantById(variantId).subscribe((_) => {
       this.toastr.success("Product Variant deleted successfully");
       this.productVariants = this.productVariants.filter((prod: IProduct) => prod.id !== variantId);
     });

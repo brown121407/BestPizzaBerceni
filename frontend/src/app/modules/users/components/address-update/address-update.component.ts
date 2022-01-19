@@ -7,6 +7,7 @@ import {UserService} from "../../services/user.service";
 import { IUser, UserRole } from "../../../../models/user";
 import { AccountService } from "../../../account/services/account.service";
 import { switchMap } from "rxjs";
+import { AddressService } from "../../services/address.service";
 
 @Component({
   selector: 'app-address-update',
@@ -28,7 +29,8 @@ export class AddressUpdateComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private toastr: ToastrService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private addressService: AddressService
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +44,7 @@ export class AddressUpdateComponent implements OnInit {
     this.page = "/users/" + this.userId.toString();
     this.isLoading = true;
     this.userService.getUser(this.userId).subscribe(res => {this.user = res
-      this.userService.getAddressById(this.addressId).subscribe((res: IAddress) => {
+      this.addressService.getAddressById(this.addressId).subscribe((res: IAddress) => {
         this.address = {
           county: res.county,
           city: res.city,
@@ -72,7 +74,7 @@ export class AddressUpdateComponent implements OnInit {
 
   updateAddress(): void {
     this.isLoading = true;
-    this.userService.updateAddress(this.addressId, this.formGroup.value)
+    this.addressService.updateAddress(this.addressId, this.formGroup.value)
       .pipe(switchMap((_) => this.accountService.refreshCurrentUser()))
       .subscribe({
         next: (_) => {

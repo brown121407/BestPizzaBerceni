@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../../services/product.service";
 import {ToastrService} from "ngx-toastr";
 import {IProductVariant, IProductVariantUpdate} from "../../../../models/product-variant";
+import { ProductVariantService } from "../../services/product-variant.service";
 
 @Component({
   selector: 'app-product-variant-update',
@@ -22,6 +23,7 @@ export class ProductVariantUpdateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private productService: ProductService,
+    private productVariantService: ProductVariantService,
     private router: Router,
     private toastr: ToastrService,
   ) { }
@@ -32,7 +34,7 @@ export class ProductVariantUpdateComponent implements OnInit {
     this.page = "/products/" + this.productId.toString();
     this.isLoading = true;
 
-    this.productService.getProductVariantsById(this.variantId).subscribe( (res:IProductVariant) => {
+    this.productVariantService.getProductVariantsById(this.variantId).subscribe( (res:IProductVariant) => {
       this.variant = {
         name: res.name,
         quantity: res.quantity,
@@ -59,7 +61,7 @@ export class ProductVariantUpdateComponent implements OnInit {
 
   updateProductVariant(): void {
     this.isLoading = true;
-    this.productService.updateProductVariant(this.variantId, this.formGroup.value).subscribe({
+    this.productVariantService.updateProductVariant(this.variantId, this.formGroup.value).subscribe({
       next: (_) => {
         this.isLoading = false;
         this.toastr.success('Successfully updated product variant!');

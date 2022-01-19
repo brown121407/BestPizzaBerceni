@@ -9,6 +9,8 @@ import { IUser, UserRole } from "../../../../models/user";
 import { IAddress } from "../../../../models/address";
 import { UserService } from "../../../users/services/user.service";
 import { Router } from "@angular/router";
+import { AddressService } from "../../../users/services/address.service";
+import { CartService } from "../../services/cart.service";
 
 @Component({
   selector: 'app-cart',
@@ -28,17 +30,19 @@ export class CartComponent implements OnInit {
     private accountService: AccountService,
     private toastr: ToastrService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private addressService: AddressService,
+    private cartService: CartService
   ) { }
 
   ngOnInit(): void {
     this.user = this.accountService.currentUser!;
     this.isLoading = true;
-    this.orderService.getCartItemsOfUser(this.user.id)
+    this.cartService.getCartItemsOfUser(this.user.id)
       .pipe(switchMap((cartItems: ICartItem[]) => {
         this.cartItems = cartItems;
 
-        return this.userService.getAddresses();
+        return this.addressService.getAddresses();
       }))
       .subscribe((addresses: IAddress[]) => {
         this.addresses = addresses.filter((address: IAddress) =>{
@@ -61,7 +65,7 @@ export class CartComponent implements OnInit {
   emptyCart(): void {
     this.isLoading = true;
     const observables = this.cartItems.map((x: ICartItem) => {
-      return this.orderService.removeCartItem(x.id);
+      return this.cartService.removeCartItem(x.id);
     });
 
     forkJoin(observables).subscribe((_) => {
@@ -74,7 +78,7 @@ export class CartComponent implements OnInit {
     this.isLoading = true;
     const observables = this.cartItems.map((x: ICartItem) => {
       if (x.quantity === 0) {
-        return this.orderService.removeCartItem(x.id);
+        return this.cartService.removeCartItem(x.id);
       }
 
       const cartItem: ICartItemUpdate = {
@@ -83,7 +87,7 @@ export class CartComponent implements OnInit {
         productVariant: x.productVariant!.id!
       };
 
-      return this.orderService.updateCartItem(x.id, cartItem);
+      return this.cartService.updateCartItem(x.id, cartItem);
     });
 
     forkJoin(observables).subscribe((_) => {

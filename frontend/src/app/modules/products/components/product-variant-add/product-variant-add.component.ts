@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../../services/product.service";
 import {ToastrService} from "ngx-toastr";
 import {IngredientService} from "../../../ingredients/services/ingredient.service";
+import { ProductVariantService } from "../../services/product-variant.service";
 
 @Component({
   selector: 'app-product-variant-add',
@@ -31,6 +32,7 @@ export class ProductVariantAddComponent implements OnInit {
     private productService: ProductService,
     private router: Router,
     private toastr: ToastrService,
+    private productVariantService: ProductVariantService
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +59,7 @@ export class ProductVariantAddComponent implements OnInit {
       product: this.id
     };
 
-    this.productService.addProductVariant(productVariant).subscribe({
+    this.productVariantService.addProductVariant(productVariant).subscribe({
       next: (_) => {
         this.isLoading = false;
         this.toastr.success("Product Variant added successfully");
