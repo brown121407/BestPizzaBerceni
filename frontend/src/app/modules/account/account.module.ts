@@ -15,6 +15,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { JwtModule } from "@auth0/angular-jwt";
 import { AppModule, tokenGetter } from "../../app.module";
 import { ErrorDirective } from "./directives/error.directive";
+import { UiModule } from "../ui/ui.module";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ErrorDirective } from "./directives/error.directive";
     MatProgressSpinnerModule,
     MatInputModule,
     MatButtonModule,
+    UiModule,
   ],
   exports: [
     ErrorDirective

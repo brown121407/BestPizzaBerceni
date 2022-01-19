@@ -1,0 +1,7 @@
+<button mat-raised-button color="primary" [disabled]="disabled || isLoading"
+        (click)="click.emit()">
+  <span [ngStyle]="{ visibility: isLoading ? 'hidden' : 'initial' }">
+    <ng-content></ng-content>
+  </span>
+  <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+</button>

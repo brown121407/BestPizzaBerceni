@@ -1,0 +1,12 @@
+button {
+  min-height: 1rem;
+}
+
+mat-progress-bar {
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 50%;
+  width: 90%;
+}
