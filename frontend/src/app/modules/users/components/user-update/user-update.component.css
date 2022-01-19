@@ -9,10 +9,6 @@
   margin-left: 20px;
 }
 
-.add-ing-body {
-  height: 100%;
-}
-
 .button-row {
   display: flex;
   justify-content: flex-end;
@@ -26,10 +22,6 @@ mat-card {
 
 .button-row .mat-button-base {
   margin: 0px 5px 5px 5px;
-}
-
-ul {
-  list-style-type: none;
 }
 
 .spacer {

@@ -20,16 +20,17 @@ import { FormsModule } from "@angular/forms";
 import { IngredientsModule } from "./modules/ingredients/ingredients.module";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { ErrorDirective } from './modules/account/directives/error.directive';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    RefreshComponent,
-  ],
+    declarations: [
+        AppComponent,
+        RefreshComponent,
+    ],
     imports: [
         // Internal modules
         AccountModule,
@@ -57,12 +58,12 @@ export function tokenGetter() {
         MatSidenavModule,
         MatDialogModule
     ],
-  providers: [
-    {
-      provide: MatDialogRef,
-      useValue: {}
-    },
-  ],
-  bootstrap: [AppComponent]
+    providers: [
+        {
+            provide: MatDialogRef,
+            useValue: {}
+        },
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -36,7 +36,7 @@
   </div>
 
   <h1>Addresses:</h1>
-  <ul style="padding: 0">
+  <ul appPlainList>
     <li *ngFor="let address of addresses; index as k">
       <mat-card>
         <h2>{{address.addressLine}}</h2>

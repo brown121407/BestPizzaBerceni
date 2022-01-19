@@ -16,6 +16,7 @@ import { UserUpdateComponent } from './components/user-update/user-update.compon
 import { AddressAddComponent } from './components/address-add/address-add.component';
 import { AddressUpdateComponent } from './components/address-update/address-update.component';
 import { FullNamePipe } from './pipes/full-name.pipe';
+import { DirectivesModule } from "../directives/directives.module";
 
 @NgModule({
   declarations: [
@@ -25,18 +26,19 @@ import { FullNamePipe } from './pipes/full-name.pipe';
     AddressUpdateComponent,
     FullNamePipe
   ],
-  imports: [
-    CommonModule,
-    UsersRoutingModule,
-    MatCardModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatProgressSpinnerModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatButtonModule,
-    MatChipsModule,
-    MatListModule
-  ]
+    imports: [
+        CommonModule,
+        UsersRoutingModule,
+        MatCardModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatProgressSpinnerModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatButtonModule,
+        MatChipsModule,
+        MatListModule,
+        DirectivesModule
+    ]
 })
 export class UsersModule { }

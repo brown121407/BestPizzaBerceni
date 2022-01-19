@@ -14,6 +14,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatRadioModule } from "@angular/material/radio";
 import { CartItemPricePipe } from './pipes/cart-item-price.pipe';
 import { OrderItemPricePipe } from './pipes/order-item-price.pipe';
+import { DirectivesModule } from "../directives/directives.module";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { OrderItemPricePipe } from './pipes/order-item-price.pipe';
         MatInputModule,
         MatButtonModule,
         MatProgressSpinnerModule,
-        MatRadioModule
+        MatRadioModule,
+        DirectivesModule
     ],
   exports: [
     CartComponent,

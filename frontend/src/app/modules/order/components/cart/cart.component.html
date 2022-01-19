@@ -11,7 +11,7 @@
             {{ cartItem!.productVariant!.product!.name }}
             <mat-chip color="accent" selected>{{ cartItem!.productVariant!.name }}</mat-chip>
           </mat-card-title>
-          <span class="spacer"></span>
+          <span appSpacer></span>
           <div class="price">
             <mat-form-field>
               <input matInput type="number" [(ngModel)]="cartItem.quantity" (change)="modifyCartItem()"
@@ -67,7 +67,7 @@
 
   <div id="cart-actions">
     <button mat-raised-button [disabled]="cartItems.length <= 0" (click)="emptyCart()">Empty Cart</button>
-    <span class="spacer"></span>
+    <span appSpacer></span>
     <button [disabled]="!hasChanged" (click)="updateCart()" mat-raised-button>
       Update
     </button>
