@@ -15,13 +15,15 @@ import { MatListModule } from "@angular/material/list";
 import { UserUpdateComponent } from './components/user-update/user-update.component';
 import { AddressAddComponent } from './components/address-add/address-add.component';
 import { AddressUpdateComponent } from './components/address-update/address-update.component';
+import { FullNamePipe } from './pipes/full-name.pipe';
 
 @NgModule({
   declarations: [
     userComponent,
     UserUpdateComponent,
     AddressAddComponent,
-    AddressUpdateComponent
+    AddressUpdateComponent,
+    FullNamePipe
   ],
   imports: [
     CommonModule,

@@ -22,9 +22,7 @@
                   *
                   <span class="product-variant-price">{{ orderItem!.productVariant!.price }} €</span>
                   =
-                  <span class="cart-item-price">
-                    {{ orderItem!.productVariant!.price * orderItem!.quantity}} €
-                  </span>
+                  <span class="cart-item-price">{{ orderItem | orderItemPrice }} €</span>
                 </div>
               </mat-card-header>
               <mat-card-content>

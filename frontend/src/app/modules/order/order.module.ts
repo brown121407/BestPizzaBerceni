@@ -12,12 +12,16 @@ import { OrderComponent } from './components/order/order.component';
 import { OrderRoutingModule } from "./order-routing.module";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatRadioModule } from "@angular/material/radio";
+import { CartItemPricePipe } from './pipes/cart-item-price.pipe';
+import { OrderItemPricePipe } from './pipes/order-item-price.pipe';
 
 @NgModule({
   declarations: [
     CartComponent,
     OrderListComponent,
-    OrderComponent
+    OrderComponent,
+    CartItemPricePipe,
+    OrderItemPricePipe
   ],
     imports: [
         CommonModule,
